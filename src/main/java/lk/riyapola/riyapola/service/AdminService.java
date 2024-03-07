@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -42,5 +43,22 @@ public class AdminService {
            return "Admin Deleted Seccfull";
        }
        return "Admin Deleted Un Seccfull";
+    }
+
+    public Admin updateAdmin(Long id, AdminDTO adminDTO) {
+       if (adminRepo.existsById(id)){
+           Admin update = adminRepo.save(new Admin(id, adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), adminDTO.getPassword(), adminDTO.getRole()));
+           return update;
+       }return null;
+
+    }
+
+    public Admin findAdminById(Long id) {
+        Optional<Admin> byId = adminRepo.findById(id);
+        return byId.orElse(null);
+    }
+
+    public Admin findAdminByName(String adminName) {
+     return adminRepo.findByFirstName(adminName);
     }
 }

@@ -47,4 +47,22 @@ public class AdminController {
         String deleteded = adminService.deletedAdmin(adminId);
         return new ResponseEntity<>(deleteded,HttpStatus.OK);
     }
+
+    @PutMapping("/{adminId}")
+    public ResponseEntity<Admin> updateAdmin(@PathVariable Long adminId , @RequestBody AdminDTO adminDTO){
+        Admin admin = adminService.updateAdmin(adminId, adminDTO);
+        return new ResponseEntity<>(admin,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/searchAdminById/{adminId}")
+    public ResponseEntity<Admin> searchId(@PathVariable Long adminId){
+        Admin admin = adminService.findAdminById(adminId);
+        return new ResponseEntity<>(admin,HttpStatus.OK);
+    }
+
+    @GetMapping("searchAdminByName/{adminName}")
+    public ResponseEntity<Admin> searchName(@PathVariable String adminName){
+        Admin adminByName = adminService.findAdminByName(adminName);
+        return new ResponseEntity<>(adminByName,HttpStatus.OK);
+    }
 }

@@ -26,6 +26,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
     private String firstName;
+    private String lastName;
     private String email;
     private String contact;
     private String nic;
@@ -33,4 +34,11 @@ public class Customer {
     private String dateTime;
     private String userName;
     private String password;
+
+    public Customer(String firstName, String lastName, String userName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.password = password;
+    }
 }
