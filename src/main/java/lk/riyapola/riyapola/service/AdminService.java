@@ -35,4 +35,12 @@ public class AdminService {
     public List<Admin> getAllAdmin() {
       return adminRepo.findAll();
     }
+
+    public String deletedAdmin(Long id) {
+       if (adminRepo.existsById(id)){
+           adminRepo.deleteById(id);
+           return "Admin Deleted Seccfull";
+       }
+       return "Admin Deleted Un Seccfull";
+    }
 }

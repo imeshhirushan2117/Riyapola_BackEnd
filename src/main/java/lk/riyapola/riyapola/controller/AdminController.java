@@ -41,4 +41,10 @@ public class AdminController {
         List<Admin> allAdmin = adminService.getAllAdmin();
         return new ResponseEntity<>(allAdmin,HttpStatus.OK);
     }
+
+    @DeleteMapping("/{adminId}")
+    public ResponseEntity<String> deletedCustomer(@PathVariable Long adminId){
+        String deleteded = adminService.deletedAdmin(adminId);
+        return new ResponseEntity<>(deleteded,HttpStatus.OK);
+    }
 }
