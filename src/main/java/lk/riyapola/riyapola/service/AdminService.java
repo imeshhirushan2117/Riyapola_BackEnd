@@ -6,6 +6,7 @@ import lk.riyapola.riyapola.repo.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Base64;
+import java.util.List;
 
 
 /**
@@ -29,5 +30,9 @@ public class AdminService {
         String encodedPassword = Base64.getEncoder().encodeToString(adminDTO.getPassword().getBytes());
         Admin save = adminRepo.save(new Admin(adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), encodedPassword , adminDTO.getRole()));
         return save;
+    }
+
+    public List<Admin> getAllAdmin() {
+      return adminRepo.findAll();
     }
 }

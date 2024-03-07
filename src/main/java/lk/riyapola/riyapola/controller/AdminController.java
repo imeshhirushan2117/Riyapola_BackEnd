@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created By Imesh Hirushan
@@ -35,5 +34,11 @@ public class AdminController {
     public ResponseEntity<Admin> saveAdmin(@RequestBody AdminDTO adminDTO){
         Admin admin = adminService.saveAdmin(adminDTO);
         return new ResponseEntity<>(admin, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Admin>> getAdmin(){
+        List<Admin> allAdmin = adminService.getAllAdmin();
+        return new ResponseEntity<>(allAdmin,HttpStatus.OK);
     }
 }
