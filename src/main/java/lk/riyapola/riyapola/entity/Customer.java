@@ -4,6 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Created By Imesh Hirushan
@@ -13,6 +17,10 @@ import jakarta.persistence.Id;
  * Time : 11:30 PM
  */
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
