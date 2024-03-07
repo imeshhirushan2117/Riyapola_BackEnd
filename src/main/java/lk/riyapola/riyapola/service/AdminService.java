@@ -5,6 +5,8 @@ import lk.riyapola.riyapola.entity.Admin;
 import lk.riyapola.riyapola.repo.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Base64;
+
 
 /**
  * Created By Imesh Hirushan
@@ -24,7 +26,8 @@ public class AdminService {
     }
 
     public Admin saveAdmin(AdminDTO adminDTO) {
-        Admin save = adminRepo.save(new Admin(adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), adminDTO.getPassword() , adminDTO.getRole()));
+        String encodedPassword = Base64.getEncoder().encodeToString(adminDTO.getPassword().getBytes());
+        Admin save = adminRepo.save(new Admin(adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), encodedPassword , adminDTO.getRole()));
         return save;
     }
 }
