@@ -1,5 +1,6 @@
 package lk.riyapola.riyapola.repo;
 
+import lk.riyapola.riyapola.dto.AdminDTO;
 import lk.riyapola.riyapola.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,8 @@ import java.util.List;
  * Time : 11:51 PM
  */
 public interface AdminRepo extends JpaRepository <Admin , Long> {
-
     Admin findByFirstName(String name);
+    Admin findAdminByUserNameAndPassword(String userName , String password);
+
 
 }

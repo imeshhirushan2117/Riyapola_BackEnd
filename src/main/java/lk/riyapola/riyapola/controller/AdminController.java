@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -64,5 +65,11 @@ public class AdminController {
     public ResponseEntity<Admin> searchName(@PathVariable String adminName){
         Admin adminByName = adminService.findAdminByName(adminName);
         return new ResponseEntity<>(adminByName,HttpStatus.OK);
+    }
+
+    @PostMapping("/adminLogin")
+    public ResponseEntity<HashMap<String , String>> adminLogin(@RequestBody AdminDTO adminDTO){
+        HashMap<String, String> loginAdmin = adminService.loginAdmin(adminDTO);
+        return new ResponseEntity<>(loginAdmin,HttpStatus.CREATED);
     }
 }
