@@ -14,5 +14,5 @@ import java.util.List;
  * Time : 1:25 AM
  */
 public interface CustomerRepo extends JpaRepository <Customer,Long>{
-
+    List<Customer> findAllByUserName(String name);
 }

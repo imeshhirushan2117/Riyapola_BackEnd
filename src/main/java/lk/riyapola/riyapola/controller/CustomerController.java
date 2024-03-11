@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 /**
  * Created By Imesh Hirushan
  * Project Name : riyapola
@@ -30,5 +32,11 @@ public class CustomerController {
     public ResponseEntity<Customer> registerCustomer(@RequestBody CustomerDTO customerDTO) {
         Customer customer = customerService.registerCustomer(customerDTO);
         return new ResponseEntity<>(customer, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/customerLogin")
+    public ResponseEntity<HashMap<String , String>> logInCustomer(@RequestBody CustomerDTO customerDTO){
+        HashMap<String, String> loginCustomer = customerService.loginCustomer(customerDTO);
+        return new ResponseEntity<>(loginCustomer , HttpStatus.CREATED);
     }
 }

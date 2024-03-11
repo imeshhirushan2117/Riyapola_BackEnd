@@ -72,9 +72,7 @@ public class AdminService {
     }
 
     public HashMap<String, String> loginAdmin(AdminDTO adminDTO) {
-
         HashMap<String, String> response = new HashMap<>();
-
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         List<Admin> allAdmins = adminRepo.findAllByUserName(adminDTO.getUserName());
 
@@ -85,12 +83,11 @@ public class AdminService {
                 response.put("token ", token);
                 return response;
             } else {
-                response.put("massage", "Token Generate Un Success");
+                response.put("massage", "Admin Token Generate Un Success");
                 return response;
             }
         }
         return response;
     }
-
 
 }
