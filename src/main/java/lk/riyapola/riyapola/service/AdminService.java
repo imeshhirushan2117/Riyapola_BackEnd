@@ -75,29 +75,19 @@ public class AdminService {
 
         HashMap<String, String> response = new HashMap<>();
 
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //String x=passwordEncoder.encode(adminDTO.getPassword());
-        //findAdminByUserNameAndPassword(username, x)
-
-//        byte[] decodedBytes = Base64.getDecoder().decode(adminDTO.getPassword());
-//        String decodedPassword = new String(decodedBytes);
-//        System.out.println("decode"+decodedPassword);
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
+        List<Admin> allAdmins = adminRepo.findAllByUserName(adminDTO.getUserName());
 
-        Admin adminByUserNameAndPassword = adminRepo.findAdminByUserNameAndPassword(adminDTO.getUserName(), encodedPassword);
-
-        System.out.println("nipun : "+adminByUserNameAndPassword);
-        System.out.println("Encode : "+encodedPassword);
-
-        if (adminByUserNameAndPassword != null) {
-            String token = this.jwtTokenGenerator.generateJwtTokenByAdmin(adminDTO);
-            response.put("token ", token);
-        } else {
-            response.put("massage", "Token Generate Un Success");
+        for (Admin admin : allAdmins) {
+            boolean matches = passwordEncoder.matches(adminDTO.getPassword(), admin.getPassword());
+            if (matches) {
+                String token = this.jwtTokenGenerator.generateJwtTokenByAdmin(adminDTO);
+                response.put("token ", token);
+                return response;
+            } else {
+                response.put("massage", "Token Generate Un Success");
+                return response;
+            }
         }
         return response;
     }

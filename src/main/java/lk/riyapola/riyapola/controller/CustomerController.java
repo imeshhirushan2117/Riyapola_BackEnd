@@ -35,5 +35,9 @@ public class CustomerController {
         return new ResponseEntity<>(customer, HttpStatus.CREATED);
     }
 
+    public  void updateCustomer(){
+
+    }
+
 
 }

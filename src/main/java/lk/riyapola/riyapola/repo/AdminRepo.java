@@ -17,6 +17,5 @@ import java.util.List;
 public interface AdminRepo extends JpaRepository <Admin , Long> {
     Admin findByFirstName(String name);
     Admin findAdminByUserNameAndPassword(String userName , String password);
-
-
+    List<Admin> findAllByUserName(String name);
 }
