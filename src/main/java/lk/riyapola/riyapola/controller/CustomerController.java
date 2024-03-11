@@ -6,10 +6,7 @@ import lk.riyapola.riyapola.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created By Imesh Hirushan
@@ -30,14 +27,8 @@ public class CustomerController {
     }
 
     @PostMapping("/registerCustomer")
-    public ResponseEntity<Customer> registerCustomer(@RequestBody CustomerDTO customerDTO){
+    public ResponseEntity<Customer> registerCustomer(@RequestBody CustomerDTO customerDTO) {
         Customer customer = customerService.registerCustomer(customerDTO);
         return new ResponseEntity<>(customer, HttpStatus.CREATED);
     }
-
-    public  void updateCustomer(){
-
-    }
-
-
 }

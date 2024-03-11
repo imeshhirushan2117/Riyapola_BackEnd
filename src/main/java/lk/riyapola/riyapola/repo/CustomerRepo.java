@@ -1,7 +1,10 @@
 package lk.riyapola.riyapola.repo;
 
+import lk.riyapola.riyapola.entity.Admin;
 import lk.riyapola.riyapola.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 /**
  * Created By Imesh Hirushan
@@ -11,4 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Time : 1:25 AM
  */
 public interface CustomerRepo extends JpaRepository <Customer,Long>{
+
 }

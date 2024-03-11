@@ -1,12 +1,16 @@
 package lk.riyapola.riyapola.service;
 
 import lk.riyapola.riyapola.dto.CustomerDTO;
+import lk.riyapola.riyapola.entity.Admin;
 import lk.riyapola.riyapola.entity.Customer;
 import lk.riyapola.riyapola.repo.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created By Imesh Hirushan
@@ -26,7 +30,8 @@ public class CustomerService {
 
 
     public Customer registerCustomer(CustomerDTO customerDTO) {
-        String encodedPassword = Base64.getEncoder().encodeToString(customerDTO.getPassword().getBytes());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
          return  customerRepo.save(new Customer(customerDTO.getFirstName(),customerDTO.getLastName(),customerDTO.getUserName(),encodedPassword));
     }
 }
