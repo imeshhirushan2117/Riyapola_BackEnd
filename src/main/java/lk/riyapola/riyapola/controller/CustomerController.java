@@ -39,4 +39,10 @@ public class CustomerController {
         HashMap<String, String> loginCustomer = customerService.loginCustomer(customerDTO);
         return new ResponseEntity<>(loginCustomer , HttpStatus.CREATED);
     }
+
+    @PutMapping("/{customerId}")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Long customerId , @RequestBody CustomerDTO customerDTO , @RequestHeader (name = "Authorization") String authorizationHeader){
+        Customer customer = customerService.updateCustomer(customerId, customerDTO, authorizationHeader);
+        return new ResponseEntity<>(customer,HttpStatus.OK);
+    }
 }

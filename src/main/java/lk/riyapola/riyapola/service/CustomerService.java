@@ -55,4 +55,17 @@ public class CustomerService {
         }
         return response;
     }
+
+    public Customer updateCustomer(Long id, CustomerDTO customerDTO, String authorizationHeader) {
+        if (this.jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            if (customerRepo.existsById(id)) {
+                Customer save = customerRepo.save(new Customer(id,customerDTO.getFirstName(),customerDTO.getLastName(),customerDTO.getEmail(),customerDTO.getContact(),customerDTO.getNic(),customerDTO.getAddress(),customerDTO.getDateTime(),customerDTO.getUserName(),customerDTO.getPassword()));
+                return save;
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
 }
