@@ -37,7 +37,6 @@ public class AdminService {
     }
 
     public Admin saveAdmin(AdminDTO adminDTO) {
-//        String encodedPassword = Base64.getEncoder().encodeToString(adminDTO.getPassword().getBytes());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
 
@@ -52,9 +51,9 @@ public class AdminService {
     public String deletedAdmin(Long id) {
         if (adminRepo.existsById(id)) {
             adminRepo.deleteById(id);
-            return "Admin Deleted Seccfull";
+            return "Admin Deleted Successfully";
         }
-        return "Admin Deleted Un Seccfull";
+        return "Admin Deleted Un Successfully";
     }
 
     public Admin updateAdmin(Long id, AdminDTO adminDTO) {

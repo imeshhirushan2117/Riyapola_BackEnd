@@ -53,9 +53,18 @@ public class AdminController {
     }
 
     @DeleteMapping("/adminDeleted/{adminId}")
-    public ResponseEntity<String> deletedCustomer(@PathVariable Long adminId){
-        String deleteded = adminService.deletedAdmin(adminId);
-        return new ResponseEntity<>(deleteded,HttpStatus.OK);
+    public ResponseEntity<String> deletedCustomer(@PathVariable Long adminId ,  @RequestHeader (name = "Authorization") String authorization){
+
+        if(jwtTokenGenerator.validateJwtToken(authorization)){
+            String deleted = adminService.deletedAdmin(adminId);
+                return new ResponseEntity<>(deleted,HttpStatus.OK);
+
+        }else{
+            return new ResponseEntity<>("Invalid Token Deleted Admin", HttpStatus.FORBIDDEN);
+        }
+
+
+
     }
 
     @PutMapping("/updateAdmin/{adminId}")
