@@ -57,8 +57,11 @@ public class AdminService {
     }
 
     public Admin updateAdmin(Long id, AdminDTO adminDTO) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
+
         if (adminRepo.existsById(id)) {
-            Admin update = adminRepo.save(new Admin(id, adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), adminDTO.getPassword(), adminDTO.getRole()));
+            Admin update = adminRepo.save(new Admin(id, adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), encodedPassword, adminDTO.getRole()));
             return update;
         }
         return null;
