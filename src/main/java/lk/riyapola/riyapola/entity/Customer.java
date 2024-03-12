@@ -37,10 +37,24 @@ public class Customer {
     private String userName;
     private String password;
 
-    public Customer(String firstName, String lastName, String userName, String password) {
+    public Customer(String firstName, String lastName, String userName, LocalDateTime dateTime, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.dateTime = String.valueOf(dateTime);
         this.userName = userName;
         this.password = password;
     }
+
+
+    //    public Customer(String firstName, String lastName, String userName, String password) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.userName = userName;
+//        this.password = password;
+//    }
+
+
+
+
+
 }

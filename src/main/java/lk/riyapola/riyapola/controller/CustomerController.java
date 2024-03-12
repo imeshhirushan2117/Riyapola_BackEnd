@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,32 +41,31 @@ public class CustomerController {
     }
 
     @PostMapping("/customerLogin")
-    public ResponseEntity<HashMap<String , String>> logInCustomer(@RequestBody CustomerDTO customerDTO){
+    public ResponseEntity<HashMap<String, String>> logInCustomer(@RequestBody CustomerDTO customerDTO) {
         HashMap<String, String> loginCustomer = customerService.loginCustomer(customerDTO);
-        return new ResponseEntity<>(loginCustomer , HttpStatus.CREATED);
+        return new ResponseEntity<>(loginCustomer, HttpStatus.CREATED);
     }
 
 
     @PutMapping("/updateCustomer/{customerId}")
-    public ResponseEntity<Object> updateCustomer(@PathVariable Long customerId , @RequestBody CustomerDTO customerDTO , @RequestHeader (name = "Authorization") String authorizationHeader){
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+    public ResponseEntity<Object> updateCustomer(@PathVariable Long customerId, @RequestBody CustomerDTO customerDTO, @RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             Customer customer = customerService.updateCustomer(customerId, customerDTO);
-            return new ResponseEntity<>(customer,HttpStatus.OK);
-        }else{
+            return new ResponseEntity<>(customer, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>("Invalid Token", HttpStatus.FORBIDDEN);
         }
     }
 
     @DeleteMapping("/deletedCustomer/{customerId}")
-    public ResponseEntity<Object> deletedCustomer(@PathVariable Long customerId,@RequestHeader(name = "Authorization") String authorizationHeader){
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+    public ResponseEntity<Object> deletedCustomer(@PathVariable Long customerId, @RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             String deleteded = customerService.deletedCustomer(customerId);
-            return new ResponseEntity<>(deleteded,HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>("Invalid Token Deleted By Customer" , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(deleteded, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Invalid Token Deleted By Customer", HttpStatus.FORBIDDEN);
         }
     }
-
 
 
 }

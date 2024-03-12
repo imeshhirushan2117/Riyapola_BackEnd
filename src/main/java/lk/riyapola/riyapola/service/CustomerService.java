@@ -37,7 +37,19 @@ public class CustomerService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
 
-        return  customerRepo.save(new Customer(customerDTO.getFirstName(),customerDTO.getLastName(),customerDTO.getUserName(),encodedPassword));
+        LocalDateTime dateTime = LocalDateTime.now();
+        String currentDateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        customerDTO.setDateTime(currentDateTimeString);
+        System.out.println("Date & Time : " + customerDTO.getDateTime());
+
+        return  customerRepo.save(new Customer(
+                customerDTO.getFirstName(),
+                customerDTO.getLastName(),
+                customerDTO.getUserName(),
+                dateTime,
+                encodedPassword
+                )
+        );
     }
 
     public HashMap<String, String> loginCustomer(CustomerDTO customerDTO) {
@@ -63,8 +75,22 @@ public class CustomerService {
     public Customer updateCustomer(Long id, CustomerDTO customerDTO) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
+
+        LocalDateTime dateTime = LocalDateTime.now();
+        String currentDateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        customerDTO.setDateTime(currentDateTimeString);
+
         if (customerRepo.existsById(id)){
-            Customer save = customerRepo.save(new Customer(id,customerDTO.getFirstName(),customerDTO.getLastName(),customerDTO.getEmail(),customerDTO.getContact(),customerDTO.getNic(),customerDTO.getAddress(),customerDTO.getDateTime(),customerDTO.getUserName(),encodedPassword));
+            Customer save = customerRepo.save(new Customer(id,
+                    customerDTO.getFirstName(),
+                    customerDTO.getLastName(),
+                    customerDTO.getEmail(),
+                    customerDTO.getContact(),
+                    customerDTO.getNic(),
+                    customerDTO.getAddress(),
+                    customerDTO.getDateTime(),
+                    customerDTO.getUserName(),
+                    encodedPassword));
             return save;
         }else{
             return null;
