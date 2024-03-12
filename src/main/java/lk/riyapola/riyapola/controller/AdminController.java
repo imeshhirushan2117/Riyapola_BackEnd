@@ -52,7 +52,7 @@ public class AdminController {
             List<Admin> allAdmin = adminService.getAllAdmin();
             return new ResponseEntity<>(allAdmin, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Invalid Token Get Admin", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
         }
     }
 
@@ -62,7 +62,7 @@ public class AdminController {
             String deleted = adminService.deletedAdmin(adminId);
             return new ResponseEntity<>(deleted, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Invalid Token Deleted Admin", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Invalid Token Deleted By Admin", HttpStatus.FORBIDDEN);
         }
     }
 
@@ -73,7 +73,7 @@ public class AdminController {
         if (jwtTokenGenerator.validateJwtToken(authorization)) {
             return new ResponseEntity<>(update, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>("Invalid Token Update Admin", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Invalid Token Update By Admin", HttpStatus.FORBIDDEN);
         }
     }
 
@@ -83,19 +83,25 @@ public class AdminController {
             List<Customer> allCustomers = adminService.getAllCustomers();
             return new ResponseEntity<>(allCustomers, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Invalid Token", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("Invalid Token get All Customers", HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("/searchAdminById/{adminId}")
-    public ResponseEntity<Admin> searchId(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorization) {
-        Admin admin = adminService.findAdminById(adminId);
-        return new ResponseEntity<>(admin, HttpStatus.OK);
+    public ResponseEntity<Object> searchId(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorization) {
+        if (jwtTokenGenerator.validateJwtToken(authorization)){
+            Admin admin = adminService.findAdminById(adminId);
+            return new ResponseEntity<>(admin, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Invalid Token Search Admin By Id", HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("/searchAdminByName/{adminName}")
-    public ResponseEntity<Admin> searchName(@PathVariable String adminName, @RequestHeader(name = "Authorization") String authorization) {
-        Admin adminByName = adminService.findAdminByName(adminName);
-        return new ResponseEntity<>(adminByName, HttpStatus.OK);
+    public ResponseEntity<Object> searchName(@PathVariable String adminName, @RequestHeader(name = "Authorization") String authorization) {
+        if (jwtTokenGenerator.validateJwtToken(authorization)){
+            Admin adminByName = adminService.findAdminByName(adminName);
+            return new ResponseEntity<>(adminByName, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Invalid Token Search Admin By Name", HttpStatus.FORBIDDEN);
     }
 
 
