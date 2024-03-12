@@ -45,9 +45,8 @@ public class CustomerController {
     }
 
 
-    @PutMapping("/{customerId}")
+    @PutMapping("/updateCustomer/{customerId}")
     public ResponseEntity<Object> updateCustomer(@PathVariable Long customerId , @RequestBody CustomerDTO customerDTO , @RequestHeader (name = "Authorization") String authorizationHeader){
-
         if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
             Customer customer = customerService.updateCustomer(customerId, customerDTO);
             return new ResponseEntity<>(customer,HttpStatus.OK);
@@ -56,6 +55,15 @@ public class CustomerController {
         }
     }
 
+    @DeleteMapping("/deletedCustomer/{customerId}")
+    public ResponseEntity<Object> deletedCustomer(@PathVariable Long customerId,@RequestHeader(name = "Authorization") String authorizationHeader){
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            String deleteded = customerService.deletedCustomer(customerId);
+            return new ResponseEntity<>(deleteded,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Invalid Token Deleted By Customer" , HttpStatus.FORBIDDEN);
+        }
+    }
 
 
 

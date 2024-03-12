@@ -47,8 +47,8 @@ public class AdminController {
     }
 
     @GetMapping("/getAllAdmin/getAll")
-    public ResponseEntity<Object> getAdmin(@RequestHeader(name = "Authorization") String authorization) {
-        if (jwtTokenGenerator.validateJwtToken(authorization)) {
+    public ResponseEntity<Object> getAdmin(@RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             List<Admin> allAdmin = adminService.getAllAdmin();
             return new ResponseEntity<>(allAdmin, HttpStatus.OK);
         } else {
@@ -57,8 +57,8 @@ public class AdminController {
     }
 
     @DeleteMapping("/adminDeleted/{adminId}")
-    public ResponseEntity<String> deletedCustomer(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorization) {
-        if (jwtTokenGenerator.validateJwtToken(authorization)) {
+    public ResponseEntity<String> deletedCustomer(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             String deleted = adminService.deletedAdmin(adminId);
             return new ResponseEntity<>(deleted, HttpStatus.OK);
         } else {
@@ -67,10 +67,10 @@ public class AdminController {
     }
 
     @PutMapping("/updateAdmin/{adminId}")
-    public ResponseEntity<Object> updateAdmin(@PathVariable Long adminId, @RequestBody AdminDTO adminDTO, @RequestHeader(name = "Authorization") String authorization) {
+    public ResponseEntity<Object> updateAdmin(@PathVariable Long adminId, @RequestBody AdminDTO adminDTO, @RequestHeader(name = "Authorization") String authorizationHeader) {
 
         Admin update = adminService.updateAdmin(adminId, adminDTO);
-        if (jwtTokenGenerator.validateJwtToken(authorization)) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             return new ResponseEntity<>(update, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Invalid Token Update By Admin", HttpStatus.FORBIDDEN);
@@ -78,8 +78,8 @@ public class AdminController {
     }
 
     @GetMapping("/getAllCustomers/customers")
-    public ResponseEntity<Object> getAllCustomer(@RequestHeader(name = "Authorization") String authorization) {
-        if (jwtTokenGenerator.validateJwtToken(authorization)) {
+    public ResponseEntity<Object> getAllCustomer(@RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             List<Customer> allCustomers = adminService.getAllCustomers();
             return new ResponseEntity<>(allCustomers, HttpStatus.OK);
         }
@@ -87,8 +87,8 @@ public class AdminController {
     }
 
     @GetMapping("/searchAdminById/{adminId}")
-    public ResponseEntity<Object> searchId(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorization) {
-        if (jwtTokenGenerator.validateJwtToken(authorization)){
+    public ResponseEntity<Object> searchId(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
             Admin admin = adminService.findAdminById(adminId);
             return new ResponseEntity<>(admin, HttpStatus.OK);
         }
@@ -96,8 +96,8 @@ public class AdminController {
     }
 
     @GetMapping("/searchAdminByName/{adminName}")
-    public ResponseEntity<Object> searchName(@PathVariable String adminName, @RequestHeader(name = "Authorization") String authorization) {
-        if (jwtTokenGenerator.validateJwtToken(authorization)){
+    public ResponseEntity<Object> searchName(@PathVariable String adminName, @RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
             Admin adminByName = adminService.findAdminByName(adminName);
             return new ResponseEntity<>(adminByName, HttpStatus.OK);
         }
