@@ -40,6 +40,12 @@ public class AdminController {
         return new ResponseEntity<>(admin, HttpStatus.CREATED);
     }
 
+    @PostMapping("/adminLogin/login")
+    public ResponseEntity<HashMap<String, String>> adminLogin(@RequestBody AdminDTO adminDTO) {
+        HashMap<String, String> loginAdmin = adminService.loginAdmin(adminDTO);
+        return new ResponseEntity<>(loginAdmin, HttpStatus.CREATED);
+    }
+
     @GetMapping("/getAllAdmin/getAll")
     public ResponseEntity<Object> getAdmin(@RequestHeader(name = "Authorization") String authorization) {
         if (jwtTokenGenerator.validateJwtToken(authorization)) {
@@ -71,36 +77,26 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/getAllCustomers/customers")
+    public ResponseEntity<Object> getAllCustomer(@RequestHeader(name = "Authorization") String authorization) {
+        if (jwtTokenGenerator.validateJwtToken(authorization)) {
+            List<Customer> allCustomers = adminService.getAllCustomers();
+            return new ResponseEntity<>(allCustomers, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Invalid Token", HttpStatus.FORBIDDEN);
+    }
+
     @GetMapping("/searchAdminById/{adminId}")
-    public ResponseEntity<Admin> searchId(@PathVariable Long adminId) {
+    public ResponseEntity<Admin> searchId(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorization) {
         Admin admin = adminService.findAdminById(adminId);
         return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
     @GetMapping("/searchAdminByName/{adminName}")
-    public ResponseEntity<Admin> searchName(@PathVariable String adminName) {
+    public ResponseEntity<Admin> searchName(@PathVariable String adminName, @RequestHeader(name = "Authorization") String authorization) {
         Admin adminByName = adminService.findAdminByName(adminName);
         return new ResponseEntity<>(adminByName, HttpStatus.OK);
     }
 
-    @PostMapping("/adminLogin/login")
-    public ResponseEntity<HashMap<String, String>> adminLogin(@RequestBody AdminDTO adminDTO) {
-        HashMap<String, String> loginAdmin = adminService.loginAdmin(adminDTO);
-        return new ResponseEntity<>(loginAdmin, HttpStatus.CREATED);
-    }
-
-
-    @GetMapping("/getAllCustomers")
-    public ResponseEntity<Object> getAllCustomer(@RequestHeader(name = "Authorization") String authorization) {
-        if (jwtTokenGenerator.validateJwtToken(authorization)) {
-            List<Customer> allCustomers = adminService.getAllCustomers();
-            if (allCustomers != null) {
-                return new ResponseEntity<>(allCustomers, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("No Customers", HttpStatus.OK);
-            }
-        }
-        return new ResponseEntity<>("Invalid Token", HttpStatus.FORBIDDEN);
-    }
 
 }
