@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created By Imesh Hirushan
@@ -51,8 +52,11 @@ public class CustomerController {
             Customer customer = customerService.updateCustomer(customerId, customerDTO);
             return new ResponseEntity<>(customer,HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("invalid Token", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Invalid Token", HttpStatus.FORBIDDEN);
         }
-
     }
+
+
+
+
 }

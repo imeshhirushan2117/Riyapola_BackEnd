@@ -2,13 +2,14 @@ package lk.riyapola.riyapola.service;
 
 import lk.riyapola.riyapola.dto.AdminDTO;
 import lk.riyapola.riyapola.entity.Admin;
+import lk.riyapola.riyapola.entity.Customer;
 import lk.riyapola.riyapola.repo.AdminRepo;
+import lk.riyapola.riyapola.repo.CustomerRepo;
 import lk.riyapola.riyapola.util.JWTTokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +26,13 @@ import java.util.Optional;
 public class AdminService {
 
     final AdminRepo adminRepo;
+    final CustomerRepo customerRepo;
     final JWTTokenGenerator jwtTokenGenerator;
 
     @Autowired
-    public AdminService(AdminRepo adminRepo, JWTTokenGenerator jwtTokenGenerator) {
+    public AdminService(AdminRepo adminRepo, CustomerRepo customerRepo, JWTTokenGenerator jwtTokenGenerator) {
         this.adminRepo = adminRepo;
+        this.customerRepo = customerRepo;
         this.jwtTokenGenerator = jwtTokenGenerator;
     }
 
@@ -88,6 +91,11 @@ public class AdminService {
             }
         }
         return response;
+    }
+
+    public List<Customer> getAllCustomers() {
+        List<Customer> all = customerRepo.findAll();
+        return all;
     }
 
 }
