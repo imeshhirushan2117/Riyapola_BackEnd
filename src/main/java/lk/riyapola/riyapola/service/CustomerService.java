@@ -46,7 +46,7 @@ public class CustomerService {
 
             if (matches){
                 String token = this.jwtTokenGenerator.generateJwtTokenByCustomer(customerDTO);
-                response.put("tiken " , token);
+                response.put("token " , token);
                 return response;
             }else{
                 response.put("massage", "Customer Token Generate Un Success");
@@ -56,14 +56,12 @@ public class CustomerService {
         return response;
     }
 
-    public Customer updateCustomer(Long id, CustomerDTO customerDTO, String authorizationHeader) {
-        if (this.jwtTokenGenerator.validateJwtToken(authorizationHeader)){
-            if (customerRepo.existsById(id)) {
-                Customer save = customerRepo.save(new Customer(id,customerDTO.getFirstName(),customerDTO.getLastName(),customerDTO.getEmail(),customerDTO.getContact(),customerDTO.getNic(),customerDTO.getAddress(),customerDTO.getDateTime(),customerDTO.getUserName(),customerDTO.getPassword()));
-                return save;
-            }else{
-                return null;
-            }
+    public Customer updateCustomer(Long id, CustomerDTO customerDTO) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
+        if (customerRepo.existsById(id)){
+            Customer save = customerRepo.save(new Customer(id,customerDTO.getFirstName(),customerDTO.getLastName(),customerDTO.getEmail(),customerDTO.getContact(),customerDTO.getNic(),customerDTO.getAddress(),customerDTO.getDateTime(),customerDTO.getUserName(),encodedPassword));
+            return save;
         }else{
             return null;
         }

@@ -69,7 +69,7 @@ public class AdminController {
 
     @PostMapping("/adminLogin")
     public ResponseEntity<HashMap<String , String>> adminLogin(@RequestBody AdminDTO adminDTO){
-        HashMap<String, String> loginAdmin = adminService.loginAdmin(adminDTO);
+        HashMap <String, String> loginAdmin = adminService.loginAdmin(adminDTO);
         return new ResponseEntity<>(loginAdmin,HttpStatus.CREATED);
     }
 }
