@@ -8,8 +8,11 @@ import lk.riyapola.riyapola.util.JWTTokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Security;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin
 public class AdminController {
 
     final AdminService adminService;
@@ -88,7 +92,7 @@ public class AdminController {
 
     @GetMapping("/searchAdminById/{adminId}")
     public ResponseEntity<Object> searchId(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorizationHeader) {
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             Admin admin = adminService.findAdminById(adminId);
             return new ResponseEntity<>(admin, HttpStatus.OK);
         }
@@ -97,12 +101,10 @@ public class AdminController {
 
     @GetMapping("/searchAdminByName/{adminName}")
     public ResponseEntity<Object> searchName(@PathVariable String adminName, @RequestHeader(name = "Authorization") String authorizationHeader) {
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             Admin adminByName = adminService.findAdminByName(adminName);
             return new ResponseEntity<>(adminByName, HttpStatus.OK);
         }
         return new ResponseEntity<>("Invalid Token Search Admin By Name", HttpStatus.FORBIDDEN);
     }
-
-
 }
