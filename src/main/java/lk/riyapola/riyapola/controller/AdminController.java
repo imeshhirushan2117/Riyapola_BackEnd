@@ -46,8 +46,18 @@ public class AdminController {
 
     @PostMapping("/adminLogin/login")
     public ResponseEntity<HashMap<String, String>> adminLogin(@RequestBody AdminDTO adminDTO) {
-        HashMap<String, String> loginAdmin = adminService.loginAdmin(adminDTO);
-        return new ResponseEntity<>(loginAdmin, HttpStatus.CREATED);
+
+        if (adminDTO != null) {
+            HashMap<String, String> loginAdmin = adminService.loginAdmin(adminDTO);
+            if (loginAdmin != null && !loginAdmin.isEmpty()) {
+                return new ResponseEntity<>(loginAdmin, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping("/getAllAdmin/getAll")
