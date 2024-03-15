@@ -37,11 +37,14 @@ public class AdminService {
     }
 
     public Admin saveAdmin(AdminDTO adminDTO) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
+       if(adminDTO != null){
+           BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+           String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
 
-        Admin save = adminRepo.save(new Admin(adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), encodedPassword, adminDTO.getRole()));
-        return save;
+           Admin save = adminRepo.save(new Admin(adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), encodedPassword, adminDTO.getRole()));
+           return save;
+       }
+        return null;
     }
 
     public List<Admin> getAllAdmin() {
@@ -66,10 +69,17 @@ public class AdminService {
 
     public Admin updateAdmin(Long id, AdminDTO adminDTO) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
 
         if (adminRepo.existsById(id)) {
-            Admin update = adminRepo.save(new Admin(id, adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), encodedPassword, adminDTO.getRole()));
+            String pwd;
+            Admin ad = adminRepo.findById(id).get();
+            if (adminDTO.getPassword()==null){
+                pwd = ad.getPassword();
+            }else {
+                String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
+                pwd=encodedPassword;
+            }
+            Admin update = adminRepo.save(new Admin(id, adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), pwd, adminDTO.getRole()));
             return update;
         }
         return null;
