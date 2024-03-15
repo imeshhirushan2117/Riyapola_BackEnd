@@ -106,7 +106,7 @@ public class AdminController {
             Admin admin = adminService.findAdminById(adminId);
             return new ResponseEntity<>(admin, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Invalid Token Search Admin By Id", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("Invalid Token Search Admin By Id", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/searchAdminByName/{adminName}")

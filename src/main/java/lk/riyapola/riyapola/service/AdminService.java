@@ -45,7 +45,15 @@ public class AdminService {
     }
 
     public List<Admin> getAllAdmin() {
-        return adminRepo.findAll();
+//        return adminRepo.findAll();
+        try {
+            return adminRepo.findAll();
+        } catch (Exception e) {
+            // Log the exception for further investigation
+            e.printStackTrace();
+            throw new RuntimeException("Error Axios data from repository: " + e.getMessage());
+        }
+
     }
 
     public String deletedAdmin(Long id) {
@@ -85,7 +93,7 @@ public class AdminService {
             boolean matches = passwordEncoder.matches(adminDTO.getPassword(), admin.getPassword());
             if (matches) {
                 String token = this.jwtTokenGenerator.generateJwtTokenByAdmin(adminDTO);
-                response.put("token ", token);
+                response.put("token", token);
                 return response;
             } else {
                 response.put("massage", "Admin Token Generate Un Success");
