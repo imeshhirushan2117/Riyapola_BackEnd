@@ -57,7 +57,6 @@ public class AdminController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping("/getAllAdmin/getAll")

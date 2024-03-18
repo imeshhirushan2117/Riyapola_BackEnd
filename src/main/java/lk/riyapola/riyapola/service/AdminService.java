@@ -48,11 +48,9 @@ public class AdminService {
     }
 
     public List<Admin> getAllAdmin() {
-//        return adminRepo.findAll();
         try {
             return adminRepo.findAll();
         } catch (Exception e) {
-            // Log the exception for further investigation
             e.printStackTrace();
             throw new RuntimeException("Error Axios data from repository: " + e.getMessage());
         }
