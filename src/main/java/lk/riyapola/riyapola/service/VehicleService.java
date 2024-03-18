@@ -70,4 +70,12 @@ public class VehicleService {
             return null;
         }
     }
+
+    public String deletedVehicle(Integer vehicleId) {
+        if (vehicleRepo.existsById(vehicleId)){
+            vehicleRepo.deleteById(vehicleId);
+            return "Vehicle Deleted Successfully";
+        }
+        return "Vehicle Deleted Un Successfully Invalid Vehicle Id";
+    }
 }

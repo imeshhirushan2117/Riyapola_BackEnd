@@ -34,33 +34,44 @@ public class VehicleRegisterController {
     }
 
     @PostMapping("/saveVehicle")
-    public ResponseEntity<Object> saveVehicle(@RequestBody VehicleDTO vehicleDTO , @RequestHeader (name = "Authorization") String authorizationHeader){
+    public ResponseEntity<Object> saveVehicle(@RequestBody VehicleDTO vehicleDTO, @RequestHeader(name = "Authorization") String authorizationHeader) {
 
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             Vehicle vehicleSave = vehicleService.saveVehicle(vehicleDTO);
-            return new ResponseEntity<>(vehicleSave , HttpStatus.CREATED);
-        }else{
-            return new ResponseEntity<>("Invalid Token Get By Admin" , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(vehicleSave, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
         }
     }
 
 
     @GetMapping("/getAllVehicles/vehicles")
-    public ResponseEntity<Object> getAllCars (@RequestHeader (name = "Authorization") String authorizationHeader) {
-       if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
-           List<Vehicle> allCars = vehicleService.getAllCars();
-           return new ResponseEntity<>(allCars , HttpStatus.OK);
-       }
-        return new ResponseEntity<>("Invalid Token Get By Admin" , HttpStatus.FORBIDDEN);
+    public ResponseEntity<Object> getAllCars(@RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
+            List<Vehicle> allCars = vehicleService.getAllCars();
+            return new ResponseEntity<>(allCars, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
     }
 
     @PutMapping("/updateVehicle/{vehicleId}")
-    public ResponseEntity<Object> updateVehicle(@RequestBody VehicleDTO vehicleDTO , @PathVariable Integer vehicleId , @RequestHeader (name = "Authorization") String authorizationHeader){
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+    public ResponseEntity<Object> updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable Integer vehicleId, @RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             Vehicle vehicleUpdate = vehicleService.updateVehicle(vehicleDTO, vehicleId);
-            return new ResponseEntity<>(vehicleUpdate , HttpStatus.CREATED);
-        }else{
+            return new ResponseEntity<>(vehicleUpdate, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @DeleteMapping("/deletedVehicle/{vehicleId}")
+    public ResponseEntity<Object> deletedVehicle(@PathVariable Integer vehicleId, @RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
+            String deleted = vehicleService.deletedVehicle(vehicleId);
+            return new ResponseEntity<>(deleted, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>("Invalid Token Get By Admin" , HttpStatus.FORBIDDEN);
         }
+
     }
 }
