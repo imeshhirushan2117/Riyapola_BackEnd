@@ -48,4 +48,26 @@ public class VehicleService {
         List<Vehicle> all = vehicleRepo.findAll();
         return all;
     }
+
+    public Vehicle updateVehicle(VehicleDTO vehicleDTO, Integer vehicleId) {
+
+        if (vehicleRepo.existsById(vehicleId)){
+            Vehicle save = vehicleRepo.save(new Vehicle(vehicleId,
+                    vehicleDTO.getBrandName(),
+                    vehicleDTO.getModuleName(),
+                    vehicleDTO.getPassengers(),
+                    vehicleDTO.getFuelType(),
+                    vehicleDTO.getTransmissionType(),
+                    vehicleDTO.getDailyRentalPrice(),
+                    vehicleDTO.getDailyLimitKilometers(),
+                    vehicleDTO.getExtraKm(),
+                    vehicleDTO.getKilometersTraveled(),
+                    vehicleDTO.getStatus()
+            ));
+
+            return save;
+        }else{
+            return null;
+        }
+    }
 }
