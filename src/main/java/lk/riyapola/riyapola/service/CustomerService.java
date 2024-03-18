@@ -2,13 +2,14 @@ package lk.riyapola.riyapola.service;
 
 import lk.riyapola.riyapola.dto.CustomerDTO;
 import lk.riyapola.riyapola.entity.Customer;
+import lk.riyapola.riyapola.entity.Vehicle;
 import lk.riyapola.riyapola.repo.CustomerRepo;
+import lk.riyapola.riyapola.repo.VehicleRepo;
 import lk.riyapola.riyapola.util.JWTTokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -26,10 +27,13 @@ public class CustomerService {
     final CustomerRepo customerRepo;
     final JWTTokenGenerator jwtTokenGenerator;
 
+    final VehicleRepo vehicleRepo;
+
     @Autowired
-    public CustomerService(CustomerRepo customerRepo, JWTTokenGenerator jwtTokenGenerator) {
+    public CustomerService(CustomerRepo customerRepo, JWTTokenGenerator jwtTokenGenerator, VehicleRepo vehicleRepo) {
         this.customerRepo = customerRepo;
         this.jwtTokenGenerator = jwtTokenGenerator;
+        this.vehicleRepo = vehicleRepo;
     }
 
 
@@ -105,5 +109,10 @@ public class CustomerService {
           return "Customer Deleted Un Successfully";
       }
 
+    }
+
+    public List<Vehicle> getAllVehicles() {
+        List<Vehicle> cars = vehicleRepo.findAll();
+        return cars ;
     }
 }

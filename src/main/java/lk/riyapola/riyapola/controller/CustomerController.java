@@ -2,15 +2,15 @@ package lk.riyapola.riyapola.controller;
 
 import lk.riyapola.riyapola.dto.CustomerDTO;
 import lk.riyapola.riyapola.entity.Customer;
+import lk.riyapola.riyapola.entity.Vehicle;
 import lk.riyapola.riyapola.service.CustomerService;
+import lk.riyapola.riyapola.service.VehicleService;
 import lk.riyapola.riyapola.util.JWTTokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,9 +30,10 @@ public class CustomerController {
     final JWTTokenGenerator jwtTokenGenerator;
 
     @Autowired
-    public CustomerController(CustomerService customerService, JWTTokenGenerator jwtTokenGenerator) {
+    public CustomerController(CustomerService customerService, JWTTokenGenerator jwtTokenGenerator, VehicleService vehicleService) {
         this.customerService = customerService;
         this.jwtTokenGenerator = jwtTokenGenerator;
+
     }
 
     @PostMapping("/registerCustomer")
@@ -68,5 +69,15 @@ public class CustomerController {
         }
     }
 
+
+    @GetMapping("/getAllVehicles")
+    public ResponseEntity<Object> getAllVehicles () {
+        try {
+            List<Vehicle> allVehicles = customerService.getAllVehicles();
+            return new ResponseEntity<>(allVehicles,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Not a Vehicles",HttpStatus.FORBIDDEN);
+        }
+    }
 
 }
