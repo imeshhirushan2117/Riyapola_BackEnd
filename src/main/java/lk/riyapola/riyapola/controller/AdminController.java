@@ -70,7 +70,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/adminDeleted/{adminId}")
-    public ResponseEntity<String> deletedCustomer(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorizationHeader) {
+    public ResponseEntity<Object> deletedAdmin(@PathVariable Long adminId, @RequestHeader(name = "Authorization") String authorizationHeader) {
         if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             String deleted = adminService.deletedAdmin(adminId);
             return new ResponseEntity<>(deleted, HttpStatus.OK);
@@ -114,6 +114,16 @@ public class AdminController {
             Admin adminByName = adminService.findAdminByName(adminName);
             return new ResponseEntity<>(adminByName, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Invalid Token Search Admin By Name", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("Invalid Token Admin", HttpStatus.FORBIDDEN);
+    }
+
+    @DeleteMapping("/deletedByAdmin/customer/{customerId}")
+    public ResponseEntity<Object> deletedCustomer( @PathVariable Long customerId , @RequestHeader (name = "Authorization") String authorizationHeader){
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            String deletedCustomer = adminService.deletedByCustomer(customerId);
+            return new ResponseEntity<>(deletedCustomer , HttpStatus.CREATED);
+        }else{
+           return new ResponseEntity<>("Invalid Token Admin", HttpStatus.FORBIDDEN);
+        }
     }
 }

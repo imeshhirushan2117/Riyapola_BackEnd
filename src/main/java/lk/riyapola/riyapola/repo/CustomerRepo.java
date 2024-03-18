@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface CustomerRepo extends JpaRepository <Customer,Long>{
     List<Customer> findAllByUserName(String name);
+
 }

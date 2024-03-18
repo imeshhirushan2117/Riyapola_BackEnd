@@ -116,4 +116,12 @@ public class AdminService {
         return all;
     }
 
+    public String deletedByCustomer(Long customerId) {
+        if (customerRepo.existsById(customerId)){
+            customerRepo.deleteById(customerId);
+            return "Customer Deleted Successfully";
+        }else{
+            return "Customer Deleted Un Successfully Invalid Customer Id " + customerId;
+        }
+    }
 }
