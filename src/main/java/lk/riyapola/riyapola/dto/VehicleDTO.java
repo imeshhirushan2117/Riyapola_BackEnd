@@ -25,7 +25,7 @@ public class VehicleDTO {
     private String transmissionType;
     private double dailyRentalPrice;
     private String dailyLimitKilometers;
-    private String extraKm;
+    private double extraKm;
     private String kilometersTraveled;
     private String status;
 }
