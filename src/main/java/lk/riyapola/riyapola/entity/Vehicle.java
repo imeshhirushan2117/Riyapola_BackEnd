@@ -34,10 +34,9 @@ public class Vehicle {
     private double dailyRentalPrice;
     private String dailyLimitKilometers;
     private double extraKm;
-    private String kilometersTraveled;
     private String status;
 
-    public Vehicle(String brandName, String moduleName, int passengers, String fuelType, String transmissionType, double dailyRentalPrice, String dailyLimitKilometers, double extraKm, String kilometersTraveled, String status) {
+    public Vehicle(String brandName, String moduleName, int passengers, String fuelType, String transmissionType, double dailyRentalPrice, String dailyLimitKilometers, double extraKm, String status) {
         this.brandName = brandName;
         this.moduleName = moduleName;
         this.passengers = passengers;
@@ -46,7 +45,6 @@ public class Vehicle {
         this.dailyRentalPrice = dailyRentalPrice;
         this.dailyLimitKilometers = dailyLimitKilometers;
         this.extraKm = extraKm;
-        this.kilometersTraveled = kilometersTraveled;
         this.status = status;
     }
 }

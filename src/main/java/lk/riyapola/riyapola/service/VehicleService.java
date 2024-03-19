@@ -36,7 +36,6 @@ public class VehicleService {
                     vehicleDTO.getDailyRentalPrice(),
                     vehicleDTO.getDailyLimitKilometers(),
                     vehicleDTO.getExtraKm(),
-                    vehicleDTO.getKilometersTraveled(),
                     vehicleDTO.getStatus()
             ));
             return save;
@@ -61,7 +60,6 @@ public class VehicleService {
                     vehicleDTO.getDailyRentalPrice(),
                     vehicleDTO.getDailyLimitKilometers(),
                     vehicleDTO.getExtraKm(),
-                    vehicleDTO.getKilometersTraveled(),
                     vehicleDTO.getStatus()
             ));
 
