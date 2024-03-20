@@ -72,6 +72,5 @@ public class VehicleRegisterController {
         } else {
             return new ResponseEntity<>("Invalid Token Get By Admin" , HttpStatus.FORBIDDEN);
         }
-
     }
 }

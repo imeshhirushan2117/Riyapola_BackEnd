@@ -46,12 +46,12 @@ public class CustomerService {
         customerDTO.setDateTime(currentDateTimeString);
         System.out.println("Date & Time : " + customerDTO.getDateTime());
 
-        return  customerRepo.save(new Customer(
-                customerDTO.getFirstName(),
-                customerDTO.getLastName(),
-                customerDTO.getUserName(),
-                dateTime,
-                encodedPassword
+        return customerRepo.save(new Customer(
+                        customerDTO.getFirstName(),
+                        customerDTO.getLastName(),
+                        customerDTO.getUserName(),
+                        dateTime,
+                        encodedPassword
                 )
         );
     }
@@ -61,16 +61,14 @@ public class CustomerService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         List<Customer> allByCustomerName = customerRepo.findAllByUserName(customerDTO.getUserName());
 
-        for (Customer customer:allByCustomerName){
+        for (Customer customer : allByCustomerName) {
             boolean matches = passwordEncoder.matches(customerDTO.getPassword(), customer.getPassword());
-
-            if (matches){
+            if (matches) {
                 String token = this.jwtTokenGenerator.generateJwtTokenByCustomer(customerDTO);
-                response.put("token " , token);
+                response.put("token", token);
                 return response;
-            }else{
-                response.put("massage", "Customer Token Generate Un Success");
-                return response;
+            } else {
+                response.put("massage : ", "Customer Token Generate Un Success");
             }
         }
         return response;
@@ -84,7 +82,7 @@ public class CustomerService {
         String currentDateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         customerDTO.setDateTime(currentDateTimeString);
 
-        if (customerRepo.existsById(id)){
+        if (customerRepo.existsById(id)) {
             Customer save = customerRepo.save(new Customer(id,
                     customerDTO.getFirstName(),
                     customerDTO.getLastName(),
@@ -96,23 +94,23 @@ public class CustomerService {
                     customerDTO.getUserName(),
                     encodedPassword));
             return save;
-        }else{
+        } else {
             return null;
         }
     }
 
     public String deletedCustomer(Long customerId) {
-      if ( customerRepo.existsById(customerId)){
-          customerRepo.deleteById(customerId);
-          return "Customer Deleted Successfully";
-      }else{
-          return "Customer Deleted Un Successfully";
-      }
+        if (customerRepo.existsById(customerId)) {
+            customerRepo.deleteById(customerId);
+            return "Customer Deleted Successfully";
+        } else {
+            return "Customer Deleted Un Successfully";
+        }
 
     }
 
     public List<Vehicle> getAllVehicles() {
         List<Vehicle> cars = vehicleRepo.findAll();
-        return cars ;
+        return cars;
     }
 }

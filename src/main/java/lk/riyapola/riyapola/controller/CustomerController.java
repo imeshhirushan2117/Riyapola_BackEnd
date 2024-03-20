@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("admin/customer")
 @CrossOrigin
 public class CustomerController {
     final CustomerService customerService;
@@ -43,9 +44,13 @@ public class CustomerController {
     }
 
     @PostMapping("/customerLogin")
-    public ResponseEntity<HashMap<String, String>> logInCustomer(@RequestBody CustomerDTO customerDTO) {
-        HashMap<String, String> loginCustomer = customerService.loginCustomer(customerDTO);
-        return new ResponseEntity<>(loginCustomer, HttpStatus.CREATED);
+    public ResponseEntity<Object> logInCustomer(@RequestBody CustomerDTO customerDTO) {
+        try {
+            HashMap<String, String> loginCustomer = customerService.loginCustomer(customerDTO);
+            return new ResponseEntity<>(loginCustomer, HttpStatus.CREATED);
+        }catch (Exception error) {
+            return new ResponseEntity<>(error , HttpStatus.FORBIDDEN);
+        }
     }
 
 
