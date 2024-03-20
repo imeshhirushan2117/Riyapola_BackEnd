@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("admin/customer")
+@RequestMapping("riyapola/customer")
 @CrossOrigin
 public class CustomerController {
     final CustomerService customerService;
@@ -83,6 +83,15 @@ public class CustomerController {
         }catch (Exception e){
             return new ResponseEntity<>("Not a Vehicles",HttpStatus.FORBIDDEN);
         }
+    }
+
+    @GetMapping("/customerVeiledVehicle")
+    public ResponseEntity<Object> customerLoginVehicle(@RequestHeader (name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            List<Vehicle> vehicles = customerService.customerLoginVehicle();
+            return new ResponseEntity<>(vehicles , HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("No Vehiciles" , HttpStatus.FORBIDDEN);
     }
 
 }

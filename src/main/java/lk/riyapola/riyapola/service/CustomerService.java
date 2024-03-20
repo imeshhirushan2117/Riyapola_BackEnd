@@ -113,4 +113,8 @@ public class CustomerService {
         List<Vehicle> cars = vehicleRepo.findAll();
         return cars;
     }
+
+    public List<Vehicle> customerLoginVehicle() {
+        return vehicleRepo.findAll();
+    }
 }
