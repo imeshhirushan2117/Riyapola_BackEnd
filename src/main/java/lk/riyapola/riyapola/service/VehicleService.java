@@ -76,4 +76,8 @@ public class VehicleService {
         }
         return "Vehicle Deleted Un Successfully Invalid Vehicle Id";
     }
+
+    public void getVehicleById(Integer vehicleId) {
+
+    }
 }
