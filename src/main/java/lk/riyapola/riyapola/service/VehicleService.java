@@ -50,7 +50,7 @@ public class VehicleService {
 
     public Vehicle updateVehicle(VehicleDTO vehicleDTO, Integer vehicleId) {
 
-        if (vehicleRepo.existsById(vehicleId)){
+        if (vehicleRepo.existsById(vehicleId)) {
             Vehicle save = vehicleRepo.save(new Vehicle(vehicleId,
                     vehicleDTO.getBrandName(),
                     vehicleDTO.getModuleName(),
@@ -64,20 +64,25 @@ public class VehicleService {
             ));
 
             return save;
-        }else{
+        } else {
             return null;
         }
     }
 
     public String deletedVehicle(Integer vehicleId) {
-        if (vehicleRepo.existsById(vehicleId)){
+        if (vehicleRepo.existsById(vehicleId)) {
             vehicleRepo.deleteById(vehicleId);
             return "Vehicle Deleted Successfully";
         }
         return "Vehicle Deleted Un Successfully Invalid Vehicle Id";
     }
 
-    public void getVehicleById(Integer vehicleId) {
+    public List<Vehicle> getVehicleById(Integer vehicleId) {
+        if (vehicleRepo.existsById(vehicleId)) {
+            List<Vehicle> vehiclesByVehicleId = vehicleRepo.findVehiclesByVehicleId(vehicleId);
+            return vehiclesByVehicleId;
+        }
+        return null;
 
     }
 }

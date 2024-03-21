@@ -17,6 +17,6 @@ import java.util.List;
  */
 public interface VehicleRepo extends JpaRepository <Vehicle , Integer> {
 
-    @Query(value = "SELECT * FROM customer WHERE customer_id = :customerId", nativeQuery = true)
-    List<Customer> findCustomerByCustomerId(@Param("customerId") Long customerId);
+    @Query(value = "SELECT * FROM vehicle WHERE vehicle_id = :vehicleId", nativeQuery = true)
+    List<Vehicle> findVehiclesByVehicleId (@Param("vehicleId") Integer vehicleId);
 }
