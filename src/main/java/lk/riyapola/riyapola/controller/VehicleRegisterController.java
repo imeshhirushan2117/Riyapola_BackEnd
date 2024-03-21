@@ -54,14 +54,6 @@ public class VehicleRegisterController {
         return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
     }
 
-    @GetMapping("getVehicleInformation/{vehicleId}")
-    public ResponseEntity<Object> getVehicleById (@PathVariable Integer vehicleId , @RequestHeader (name = "Authorization") String authorizationHeader) {
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
-            List<Vehicle> vehicleById = vehicleService.getVehicleById(vehicleId);
-            return new ResponseEntity<>(vehicleById , HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
-    }
 
     @PutMapping("/updateVehicle/{vehicleId}")
     public ResponseEntity<Object> updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable Integer vehicleId, @RequestHeader(name = "Authorization") String authorizationHeader) {

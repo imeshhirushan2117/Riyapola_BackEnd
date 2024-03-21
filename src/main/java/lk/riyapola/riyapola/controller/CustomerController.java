@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,13 +27,15 @@ import java.util.List;
 @CrossOrigin
 public class CustomerController {
     final CustomerService customerService;
+    final VehicleService vehicleService;
     final JWTTokenGenerator jwtTokenGenerator;
 
     @Autowired
-    public CustomerController(CustomerService customerService, JWTTokenGenerator jwtTokenGenerator, VehicleService vehicleService) {
+    public CustomerController(CustomerService customerService, JWTTokenGenerator jwtTokenGenerator, VehicleService vehicleService, VehicleService vehicleService1) {
         this.customerService = customerService;
         this.jwtTokenGenerator = jwtTokenGenerator;
 
+        this.vehicleService = vehicleService1;
     }
 
     @PostMapping("/registerCustomer")
@@ -85,6 +86,9 @@ public class CustomerController {
         }
     }
 
+
+
+
     @GetMapping("/customerVeiledVehicle")
     public ResponseEntity<Object> customerLoginVehicle(@RequestHeader (name = "Authorization") String authorizationHeader) {
         if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
@@ -93,5 +97,16 @@ public class CustomerController {
         }
         return new ResponseEntity<>("No Vehiciles" , HttpStatus.FORBIDDEN);
     }
+
+
+    @GetMapping("/getVehicleInformation/{vehicleId}")
+    public ResponseEntity<Object> getVehicleById (@PathVariable Integer vehicleId , @RequestHeader (name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            List<Vehicle> vehicleById = vehicleService.getVehicleById(vehicleId);
+            return new ResponseEntity<>(vehicleById , HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
+    }
+
 
 }
