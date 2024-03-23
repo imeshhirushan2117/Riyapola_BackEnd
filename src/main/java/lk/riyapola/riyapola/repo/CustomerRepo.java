@@ -21,7 +21,7 @@ public interface CustomerRepo extends JpaRepository <Customer,Long>{
 //    List<Customer> findCustomersWithNonNullFields();
 
 
-//    @Query(value = "SELECT * FROM customer WHERE customer_id = :customerId", nativeQuery = true)
-//    List<Customer> findCustomerByCustomerId(@Param("customerId") Long customerId);
+    @Query(value = "SELECT * FROM customer WHERE customer_id = :customerId", nativeQuery = true)
+    List<Customer> findCustomerByCustomerId(@Param("customerId") Long customerId);
 
 }

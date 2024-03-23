@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("riyapola/customer")
+@RequestMapping("/riyapola/customer")
 @CrossOrigin
 public class CustomerController {
     final CustomerService customerService;
@@ -106,6 +106,14 @@ public class CustomerController {
             return new ResponseEntity<>(vehicleById , HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
+    }
+    @GetMapping("getCustomer/{customerId}")
+    public ResponseEntity<Object> getCustomerById(@PathVariable Long customerId, @RequestHeader (name = "Authorization")String authorizationHeader){
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            List<Customer> customerById = customerService.getCustomerById(customerId);
+            return new ResponseEntity<>(customerById , HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("No Customer By Id" , HttpStatus.FORBIDDEN);
     }
 
 

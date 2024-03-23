@@ -117,4 +117,13 @@ public class CustomerService {
     public List<Vehicle> customerLoginVehicle() {
         return vehicleRepo.findAll();
     }
+
+    public List<Customer> getCustomerById(Long customerId) {
+        if (customerRepo.existsById(customerId)){
+            List<Customer> customerByCustomerId = customerRepo.findCustomerByCustomerId(customerId);
+            return customerByCustomerId;
+        }else{
+            return null;
+        }
+    }
 }
