@@ -86,9 +86,6 @@ public class CustomerController {
         }
     }
 
-
-
-
     @GetMapping("/customerVeiledVehicle")
     public ResponseEntity<Object> customerLoginVehicle(@RequestHeader (name = "Authorization") String authorizationHeader) {
         if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
@@ -107,13 +104,23 @@ public class CustomerController {
         }
         return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
     }
-    @GetMapping("getCustomer/{customerId}")
+    @GetMapping("/getCustomer/{customerId}")
     public ResponseEntity<Object> getCustomerById(@PathVariable Long customerId, @RequestHeader (name = "Authorization")String authorizationHeader){
         if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
             List<Customer> customerById = customerService.getCustomerById(customerId);
             return new ResponseEntity<>(customerById , HttpStatus.CREATED);
         }
         return new ResponseEntity<>("No Customer By Id" , HttpStatus.FORBIDDEN);
+    }
+
+    @GetMapping("/getAll/customers")
+    public ResponseEntity<Object> getAllCustomers (@RequestHeader (name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            List<Customer> allCustomers = customerService.getAllCustomers();
+            return new ResponseEntity<>(allCustomers , HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("No Customers ", HttpStatus.FORBIDDEN);
+        }
     }
 
 

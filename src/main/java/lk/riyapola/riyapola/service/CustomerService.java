@@ -126,4 +126,9 @@ public class CustomerService {
             return null;
         }
     }
+
+    public List<Customer> getAllCustomers() {
+        List<Customer> all = customerRepo.findAll();
+        return all;
+    }
 }
