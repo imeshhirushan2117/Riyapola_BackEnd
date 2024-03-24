@@ -23,8 +23,8 @@ public class VehicleDTO {
     private int passengers;
     private String fuelType;
     private String transmissionType;
-    private double dailyRentalPrice;
+    private String dailyRentalPrice;
     private String dailyLimitKilometers;
-    private double extraKm;
+    private String extraKm;
     private String status;
 }

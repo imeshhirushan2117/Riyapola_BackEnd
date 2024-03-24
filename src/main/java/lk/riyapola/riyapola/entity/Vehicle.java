@@ -31,12 +31,12 @@ public class Vehicle {
     private int passengers;
     private String fuelType;
     private String transmissionType;
-    private double dailyRentalPrice;
+    private String dailyRentalPrice;
     private String dailyLimitKilometers;
-    private double extraKm;
+    private String extraKm;
     private String status;
 
-    public Vehicle(String brandName, String moduleName, int passengers, String fuelType, String transmissionType, double dailyRentalPrice, String dailyLimitKilometers, double extraKm, String status) {
+    public Vehicle(String brandName, String moduleName, int passengers, String fuelType, String transmissionType, String dailyRentalPrice, String dailyLimitKilometers, String extraKm, String status) {
         this.brandName = brandName;
         this.moduleName = moduleName;
         this.passengers = passengers;
