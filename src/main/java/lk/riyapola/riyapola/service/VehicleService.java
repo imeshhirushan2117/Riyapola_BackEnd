@@ -44,7 +44,7 @@ public class VehicleService {
     }
 
     public List<Vehicle> getAllCars() {
-        List<Vehicle> all = vehicleRepo.findAll();
+    List<Vehicle> all = vehicleRepo.findAll();
         return all;
     }
 

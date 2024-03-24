@@ -19,4 +19,6 @@ public interface VehicleRepo extends JpaRepository <Vehicle , Integer> {
 
     @Query(value = "SELECT * FROM vehicle WHERE vehicle_id = :vehicleId", nativeQuery = true)
     List<Vehicle> findVehiclesByVehicleId (@Param("vehicleId") Integer vehicleId);
+
+
 }
