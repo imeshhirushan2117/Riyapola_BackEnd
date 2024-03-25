@@ -1,7 +1,7 @@
 package lk.riyapola.riyapola.repo;
 
-import lk.riyapola.riyapola.entity.Admin;
 import lk.riyapola.riyapola.entity.Customer;
+import lk.riyapola.riyapola.util.JWTTokenGenerator;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,5 +25,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
     @Query(value = "SELECT * FROM customer WHERE email IS NOT NULL AND contact IS NOT NULL AND nic IS NOT NULL AND address IS NOT NULL", nativeQuery = true)
     List<Customer> findCustomersWithNonNullFields();
 
+
+//    JWTTokenGenerator getCustomerById(String id);
 
 }

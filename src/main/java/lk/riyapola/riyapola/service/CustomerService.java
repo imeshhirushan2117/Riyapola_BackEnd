@@ -136,7 +136,4 @@ public class CustomerService {
         return all;
     }
 
-    public void getCustomerDetails() {
-
-    }
 }

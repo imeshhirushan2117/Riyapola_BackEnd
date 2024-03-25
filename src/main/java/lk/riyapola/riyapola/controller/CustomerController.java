@@ -123,12 +123,15 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/getCustomerDetails")
-    public void getCustomerDetails(@RequestHeader (name = "Authorization") String authorizationHeader){
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
-            customerService.getCustomerDetails();
-        }
-    }
+//    @GetMapping("/getUserInfoById")
+//    public ResponseEntity<Object> getCustomerDetails(@RequestHeader (name = "Authorization") String authorizationHeader){
+//        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+//            JWTTokenGenerator customerFromJwtToken = this.jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
+//            return new ResponseEntity<>(customerFromJwtToken , HttpStatus.CREATED);
+//        }else{
+//            return new ResponseEntity<>("Token Invaled not get customer info " , HttpStatus.UNAUTHORIZED);
+//        }
+//    }
 
 
 }

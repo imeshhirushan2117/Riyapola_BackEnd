@@ -6,6 +6,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lk.riyapola.riyapola.dto.AdminDTO;
 import lk.riyapola.riyapola.dto.CustomerDTO;
+import lk.riyapola.riyapola.repo.CustomerRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +25,20 @@ import java.util.Date;
 
 @Component
 public class JWTTokenGenerator {
+
+
+    final CustomerRepo customerRepo;
+
     @Value("${riyapola.app.jwtSecret}")
     private String jwtSecret;
 
     @Value("${riyapola.app.jwtExpirationMs}")
     private int jwtExpirationMs;
+
+    @Autowired
+    public JWTTokenGenerator(CustomerRepo customerRepo) {
+        this.customerRepo = customerRepo;
+    }
 
 
     public String generateJwtTokenByAdmin(AdminDTO adminDTO) {
@@ -67,4 +78,11 @@ public class JWTTokenGenerator {
         }
         return false;
     }
+
+//    public JWTTokenGenerator getCustomerFromJwtToken(String token){
+//        String jwtToken = token.substring("Bearer ".length());
+//        String id = Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJwt(jwtToken).getBody().getId();
+//        return customerRepo.getCustomerById(id);
+//    }
+
 }
