@@ -1,5 +1,9 @@
 package lk.riyapola.riyapola.service;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import lk.riyapola.riyapola.dto.CustomerDTO;
 import lk.riyapola.riyapola.entity.Customer;
 import lk.riyapola.riyapola.entity.Vehicle;
@@ -130,5 +134,9 @@ public class CustomerService {
     public List<Customer> getAllCustomers() {
         List<Customer> all = customerRepo.findAll();
         return all;
+    }
+
+    public void getCustomerDetails() {
+
     }
 }

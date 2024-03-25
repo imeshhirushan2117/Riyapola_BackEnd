@@ -123,5 +123,12 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/getCustomerDetails")
+    public void getCustomerDetails(@RequestHeader (name = "Authorization") String authorizationHeader){
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            customerService.getCustomerDetails();
+        }
+    }
+
 
 }
