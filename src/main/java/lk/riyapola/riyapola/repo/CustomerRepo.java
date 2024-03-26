@@ -4,6 +4,7 @@ import lk.riyapola.riyapola.entity.Customer;
 import lk.riyapola.riyapola.util.JWTTokenGenerator;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * Date : Mar 8, 2024
  * Time : 1:25 AM
  */
+
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
     List<Customer> findAllByUserName(String name);
 
@@ -26,6 +28,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
     List<Customer> findCustomersWithNonNullFields();
 
 
-//    JWTTokenGenerator getCustomerById(String id);
-
+//    Customer findByCustomerId(Long customerId);
+    Customer getCustomerByCustomerId(Long customerId);
 }
+

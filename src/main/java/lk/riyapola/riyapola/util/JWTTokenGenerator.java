@@ -6,6 +6,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lk.riyapola.riyapola.dto.AdminDTO;
 import lk.riyapola.riyapola.dto.CustomerDTO;
+import lk.riyapola.riyapola.entity.Customer;
 import lk.riyapola.riyapola.repo.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,7 +53,7 @@ public class JWTTokenGenerator {
     }
 
 
-    public String generateJwtTokenByCustomer(CustomerDTO customerDTO){
+    public String generateJwtTokenByCustomer(CustomerDTO customerDTO) {
         return Jwts.builder()
                 .setId(String.valueOf(customerDTO.getCustomerId()))
                 .setSubject(customerDTO.getUserName())
@@ -73,16 +74,18 @@ public class JWTTokenGenerator {
         try {
             Jwts.parserBuilder().setSigningKey(key()).build().parse(jwtToken);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error when generating token...");
         }
         return false;
     }
 
-//    public JWTTokenGenerator getCustomerFromJwtToken(String token){
-//        String jwtToken = token.substring("Bearer ".length());
-//        String id = Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJwt(jwtToken).getBody().getId();
-//        return customerRepo.getCustomerById(id);
-//    }
+    public Customer getCustomerFromJwtToken(String token) {
+        String jwtToken = token.substring("Bearer ".length());
+        String id = Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(jwtToken).getBody().getId();
+        Long customerId = Long.parseLong(id);
+        return customerRepo.getCustomerByCustomerId(customerId);
+
+    }
 
 }

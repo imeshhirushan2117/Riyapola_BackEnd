@@ -6,6 +6,7 @@ import lk.riyapola.riyapola.entity.Vehicle;
 import lk.riyapola.riyapola.service.CustomerService;
 import lk.riyapola.riyapola.service.VehicleService;
 import lk.riyapola.riyapola.util.JWTTokenGenerator;
+import org.antlr.v4.runtime.atn.TokensStartState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -123,15 +124,16 @@ public class CustomerController {
         }
     }
 
-//    @GetMapping("/getUserInfoById")
-//    public ResponseEntity<Object> getCustomerDetails(@RequestHeader (name = "Authorization") String authorizationHeader){
-//        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
-//            JWTTokenGenerator customerFromJwtToken = this.jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
-//            return new ResponseEntity<>(customerFromJwtToken , HttpStatus.CREATED);
-//        }else{
-//            return new ResponseEntity<>("Token Invaled not get customer info " , HttpStatus.UNAUTHORIZED);
-//        }
-//    }
+    @GetMapping("/getUserInfoById")
+    public ResponseEntity<Object> getCustomerDetails(@RequestHeader (name = "Authorization") String authorizationHeader){
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            Customer customerFromJwtToken = jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
+            return new ResponseEntity<>(customerFromJwtToken , HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>("Token Invalid not get customer info ", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 
 
 }
