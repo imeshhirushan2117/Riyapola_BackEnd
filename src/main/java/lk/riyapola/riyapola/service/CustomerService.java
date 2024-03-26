@@ -89,8 +89,6 @@ public class CustomerService {
         customerDTO.setDateTime(currentDateTimeString);
 
 
-
-
         if (customerRepo.existsById(id)) {
             Customer save = customerRepo.save(new Customer(id,
                     customerDTO.getFirstName(),

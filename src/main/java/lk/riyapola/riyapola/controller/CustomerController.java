@@ -35,7 +35,6 @@ public class CustomerController {
     public CustomerController(CustomerService customerService, JWTTokenGenerator jwtTokenGenerator, VehicleService vehicleService, VehicleService vehicleService1) {
         this.customerService = customerService;
         this.jwtTokenGenerator = jwtTokenGenerator;
-
         this.vehicleService = vehicleService1;
     }
 
@@ -54,7 +53,6 @@ public class CustomerController {
             return new ResponseEntity<>(error , HttpStatus.FORBIDDEN);
         }
     }
-
 
     @PutMapping("/updateCustomer/{customerId}")
     public ResponseEntity<Object> updateCustomer(@PathVariable Long customerId, @RequestBody CustomerDTO customerDTO, @RequestHeader(name = "Authorization") String authorizationHeader) {
@@ -76,7 +74,6 @@ public class CustomerController {
         }
     }
 
-
     @GetMapping("/getAllVehicles")
     public ResponseEntity<Object> getAllVehicles () {
         try {
@@ -95,7 +92,6 @@ public class CustomerController {
         }
         return new ResponseEntity<>("No Vehiciles" , HttpStatus.FORBIDDEN);
     }
-
 
     @GetMapping("/getVehicleInformation/{vehicleId}")
     public ResponseEntity<Object> getVehicleById (@PathVariable Integer vehicleId , @RequestHeader (name = "Authorization") String authorizationHeader) {
@@ -133,7 +129,4 @@ public class CustomerController {
             return new ResponseEntity<>("Token Invalid not get customer info ", HttpStatus.UNAUTHORIZED);
         }
     }
-
-
-
 }

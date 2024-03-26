@@ -27,7 +27,6 @@ import java.util.Date;
 @Component
 public class JWTTokenGenerator {
 
-
     final CustomerRepo customerRepo;
 
     @Value("${riyapola.app.jwtSecret}")
@@ -85,7 +84,6 @@ public class JWTTokenGenerator {
         String id = Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(jwtToken).getBody().getId();
         Long customerId = Long.parseLong(id);
         return customerRepo.getCustomerByCustomerId(customerId);
-
     }
 
 }
