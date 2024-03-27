@@ -14,9 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,17 +49,22 @@ public class CustomerService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
 
-        LocalDateTime dateTime = LocalDateTime.now();
-        String currentDateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//        LocalDateTime dateTime = LocalDateTime.now();
+//        String currentDateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        customerDTO.setDateTime(currentDateTimeString);
-        System.out.println("Date & Time : " + customerDTO.getDateTime());
+//        customerDTO.setDateTime(currentDateTimeString);
+//        System.out.println("Date & Time : " + customerDTO.getDateTime());
+
+        Date currentDate = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String formattedDateTime = formatter.format(currentDate);
+        System.out.println(formattedDateTime);
 
         return customerRepo.save(new Customer(
                         customerDTO.getFirstName(),
                         customerDTO.getLastName(),
                         customerDTO.getUserName(),
-                        dateTime,
+                        formattedDateTime,
                         encodedPassword
                 )
         );
@@ -84,10 +92,24 @@ public class CustomerService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
 
-        LocalDateTime dateTime = LocalDateTime.now();
-        String currentDateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        customerDTO.setDateTime(currentDateTimeString);
+//        LocalDateTime dateTime = LocalDateTime.now();
+//        String currentDateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//        customerDTO.setDateTime(currentDateTimeString);
 
+
+//        Date currentDate = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//        String formattedDateTime = formatter.format(currentDate);
+//        System.out.println(formattedDateTime);
+
+        if (customerDTO.getDateTime() == null) {
+
+            Date currentDate = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String formattedDateTime = formatter.format(currentDate);
+
+            customerDTO.setDateTime(formattedDateTime);
+        }
 
         if (customerRepo.existsById(id)) {
             Customer save = customerRepo.save(new Customer(id,
@@ -126,10 +148,10 @@ public class CustomerService {
     }
 
     public List<Customer> getCustomerById(Long customerId) {
-        if (customerRepo.existsById(customerId)){
+        if (customerRepo.existsById(customerId)) {
             List<Customer> customerByCustomerId = customerRepo.findCustomerByCustomerId(customerId);
             return customerByCustomerId;
-        }else{
+        } else {
             return null;
         }
     }
