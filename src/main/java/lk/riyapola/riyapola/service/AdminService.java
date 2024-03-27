@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -38,13 +37,13 @@ public class AdminService {
     }
 
     public Admin saveAdmin(AdminDTO adminDTO) {
-       if(adminDTO != null){
-           BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-           String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
+        if (adminDTO != null) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
 
-           Admin save = adminRepo.save(new Admin(adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), encodedPassword, adminDTO.getRole()));
-           return save;
-       }
+            Admin save = adminRepo.save(new Admin(adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), encodedPassword, adminDTO.getRole()));
+            return save;
+        }
         return null;
     }
 
@@ -72,11 +71,11 @@ public class AdminService {
         if (adminRepo.existsById(id)) {
             String pwd;
             Admin ad = adminRepo.findById(id).get();
-            if (adminDTO.getPassword()==null){
+            if (adminDTO.getPassword() == null) {
                 pwd = ad.getPassword();
-            }else {
+            } else {
                 String encodedPassword = passwordEncoder.encode(adminDTO.getPassword());
-                pwd=encodedPassword;
+                pwd = encodedPassword;
             }
             Admin update = adminRepo.save(new Admin(id, adminDTO.getFirstName(), adminDTO.getLastName(), adminDTO.getUserName(), pwd, adminDTO.getRole()));
             return update;
@@ -113,17 +112,18 @@ public class AdminService {
     }
 
     public List<Customer> getAllCustomers() {
-//        List<Customer> customersWithNonNullFields = customerRepo.findCustomersWithNonNullFields();
-//        return customersWithNonNullFields;
-        List<Customer> all = customerRepo.findAll();
-        return all;
+        List<Customer> customersWithNonNullFields = customerRepo.findCustomersWithNonNullFields();
+        return customersWithNonNullFields;
+
+        // List<Customer> all = customerRepo.findAll();
+        // return all;
     }
 
     public String deletedByCustomer(Long customerId) {
-        if (customerRepo.existsById(customerId)){
+        if (customerRepo.existsById(customerId)) {
             customerRepo.deleteById(customerId);
             return "Customer Deleted Successfully";
-        }else{
+        } else {
             return "Customer Deleted Un Successfully Invalid Customer Id " + customerId;
         }
     }

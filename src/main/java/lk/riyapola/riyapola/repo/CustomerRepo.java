@@ -31,5 +31,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
 //    Customer findByCustomerId(Long customerId);
     Customer getCustomerByCustomerId(Long customerId);
 
+    Customer getCustomerByDateTime(String dateTime);
+
 }
 
