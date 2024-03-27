@@ -85,4 +85,11 @@ public class VehicleService {
         return null;
 
     }
+
+    public List<Vehicle> getVehicleInformationForCustomer(Integer vehicleId) {
+        if (vehicleRepo.existsById(vehicleId)){
+            List<Vehicle> vehiclesByVehicleId = vehicleRepo.findVehiclesByVehicleId(vehicleId);
+            return vehiclesByVehicleId ;
+        }return null;
+    }
 }

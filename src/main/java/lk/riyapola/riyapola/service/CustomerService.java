@@ -49,12 +49,6 @@ public class CustomerService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
 
-//        LocalDateTime dateTime = LocalDateTime.now();
-//        String currentDateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-//        customerDTO.setDateTime(currentDateTimeString);
-//        System.out.println("Date & Time : " + customerDTO.getDateTime());
-
         Date currentDate = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String formattedDateTime = formatter.format(currentDate);
