@@ -163,4 +163,29 @@ public class CustomerController {
         }
     }
 
+
+
+    @GetMapping("/getCustomerUseNamePasswordInfoById")
+    public ResponseEntity<Object> getCustomerUseNamePassword(@RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
+            Customer customerFromJwtToken = jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
+            return new ResponseEntity<>(customerFromJwtToken, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Token Invalid not get customer info ", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+
+    @PutMapping("/updateCustomerUseNamePasswordInfoById")
+    public  ResponseEntity<Object> updateCustomerUseNamePassword (@RequestBody CustomerDTO customerDTO , @RequestHeader (name = "Authorization") String authorizationHeader) {
+
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            Customer customerFromJwtToken = jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
+            Customer customerUpdate = customerService.updateCustomerUseNamePassword(customerDTO, customerFromJwtToken);
+            return new ResponseEntity<>(customerUpdate, HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>("Token Invalid not get customer info ", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 }

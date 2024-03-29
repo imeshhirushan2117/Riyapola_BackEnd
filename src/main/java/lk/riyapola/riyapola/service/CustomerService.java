@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created By Imesh Hirushan
@@ -148,6 +149,7 @@ public class CustomerService {
 
     public Customer updateCustomerInfo(Customer customerFromJwtToken, CustomerDTO customerDTO) {
         if (customerRepo.existsById(Long.valueOf(customerFromJwtToken.getCustomerId()))) {
+
             Customer customer = customerRepo.findById(customerFromJwtToken.getCustomerId()).orElse(null);
             if (customer != null) {
                 customer.setFirstName(customerDTO.getFirstName());
@@ -157,6 +159,26 @@ public class CustomerService {
                 customer.setNic(customerDTO.getNic());
                 customer.setAddress(customerDTO.getAddress());
                 customer.setDateTime(customerFromJwtToken.getDateTime());
+                customerRepo.save(customer);
+                return customer;
+            } else {
+                System.out.println("Customer with ID not found.");
+            }
+        }
+        return null;
+    }
+
+    public Customer updateCustomerUseNamePassword(CustomerDTO customerDTO, Customer customerFromJwtToken) {
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
+
+
+        if (customerRepo.existsById(customerFromJwtToken.getCustomerId())) {
+            Customer customer = customerRepo.findById(customerFromJwtToken.getCustomerId()).orElse(null);
+            if (customer != null) {
+                customer.setUserName(customerDTO.getUserName());
+                customer.setPassword(encodedPassword);
                 customerRepo.save(customer);
                 return customer;
             } else {
