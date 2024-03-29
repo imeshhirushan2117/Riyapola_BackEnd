@@ -49,8 +49,8 @@ public class CustomerController {
         try {
             HashMap<String, String> loginCustomer = customerService.loginCustomer(customerDTO);
             return new ResponseEntity<>(loginCustomer, HttpStatus.CREATED);
-        }catch (Exception error) {
-            return new ResponseEntity<>(error , HttpStatus.FORBIDDEN);
+        } catch (Exception error) {
+            return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
         }
     }
 
@@ -75,83 +75,92 @@ public class CustomerController {
     }
 
     @GetMapping("/getAllVehicles")
-    public ResponseEntity<Object> getAllVehicles () {
+    public ResponseEntity<Object> getAllVehicles() {
         try {
             List<Vehicle> allVehicles = customerService.getAllVehicles();
-            return new ResponseEntity<>(allVehicles,HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>("Not a Vehicles",HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(allVehicles, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Not a Vehicles", HttpStatus.FORBIDDEN);
         }
     }
 
     @GetMapping("/customerVeiledVehicle")
-    public ResponseEntity<Object> customerLoginVehicle(@RequestHeader (name = "Authorization") String authorizationHeader) {
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+    public ResponseEntity<Object> customerLoginVehicle(@RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             List<Vehicle> vehicles = customerService.customerLoginVehicle();
-            return new ResponseEntity<>(vehicles , HttpStatus.CREATED);
+            return new ResponseEntity<>(vehicles, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>("No Vehiciles" , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("No Vehiciles", HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("/getVehicleInformation/{vehicleId}")
-    public ResponseEntity<Object> getVehicleById (@PathVariable Integer vehicleId , @RequestHeader (name = "Authorization") String authorizationHeader) {
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+    public ResponseEntity<Object> getVehicleById(@PathVariable Integer vehicleId, @RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             List<Vehicle> vehicleById = vehicleService.getVehicleById(vehicleId);
-            return new ResponseEntity<>(vehicleById , HttpStatus.CREATED);
+            return new ResponseEntity<>(vehicleById, HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("/getVehicleInformationForCustomer/{vehicleId}")
-    public ResponseEntity<Object> getVehicleInformationForCustomer(@PathVariable Integer vehicleId){
-      try {
-          List<Vehicle> vehicleInformationForCustomer = vehicleService.getVehicleInformationForCustomer(vehicleId);
-          return new ResponseEntity<>(vehicleInformationForCustomer , HttpStatus.CREATED);
-      }catch (Exception e) {
-          return new ResponseEntity<>("Not Vehicles Information By Customers", HttpStatus.FORBIDDEN);
-      }
+    public ResponseEntity<Object> getVehicleInformationForCustomer(@PathVariable Integer vehicleId) {
+        try {
+            List<Vehicle> vehicleInformationForCustomer = vehicleService.getVehicleInformationForCustomer(vehicleId);
+            return new ResponseEntity<>(vehicleInformationForCustomer, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Not Vehicles Information By Customers", HttpStatus.FORBIDDEN);
+        }
     }
 
     @GetMapping("/getCustomer/{customerId}")
-    public ResponseEntity<Object> getCustomerById(@PathVariable Long customerId, @RequestHeader (name = "Authorization")String authorizationHeader){
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+    public ResponseEntity<Object> getCustomerById(@PathVariable Long customerId, @RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             List<Customer> customerById = customerService.getCustomerById(customerId);
-            return new ResponseEntity<>(customerById , HttpStatus.CREATED);
+            return new ResponseEntity<>(customerById, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>("No Customer By Id" , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("No Customer By Id", HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("/getAll/customers")
-    public ResponseEntity<Object> getAllCustomers (@RequestHeader (name = "Authorization") String authorizationHeader) {
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+    public ResponseEntity<Object> getAllCustomers(@RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             List<Customer> allCustomers = customerService.getAllCustomers();
-            return new ResponseEntity<>(allCustomers , HttpStatus.OK);
-        }else{
+            return new ResponseEntity<>(allCustomers, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>("No Customers ", HttpStatus.FORBIDDEN);
         }
     }
 
     @GetMapping("/getUserInfoById")
-    public ResponseEntity<Object> getCustomerDetails(@RequestHeader (name = "Authorization") String authorizationHeader){
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+    public ResponseEntity<Object> getCustomerDetails(@RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             Customer customerFromJwtToken = jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
-            return new ResponseEntity<>(customerFromJwtToken , HttpStatus.CREATED);
-        }else{
+            return new ResponseEntity<>(customerFromJwtToken, HttpStatus.CREATED);
+        } else {
             return new ResponseEntity<>("Token Invalid not get customer info ", HttpStatus.UNAUTHORIZED);
         }
     }
 
     @DeleteMapping("/deletedUserInfoById")
-    public ResponseEntity<Object> deletedCustomerInfo(@RequestHeader (name = "Authorization") String authorizationHeader) {
-        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
-
+    public ResponseEntity<Object> deletedCustomerInfo(@RequestHeader(name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             Customer customerIdFromJwtToken = jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
             String deletedCustomer = customerService.deletedCustomerInfo(customerIdFromJwtToken);
-            return new ResponseEntity<>(deletedCustomer , HttpStatus.CREATED);
-        }else{
+            return new ResponseEntity<>(deletedCustomer, HttpStatus.CREATED);
+        } else {
             return new ResponseEntity<>("Token Invalid not get customer info ", HttpStatus.UNAUTHORIZED);
         }
     }
 
+    @PutMapping("/updateUserInfoById")
+    public ResponseEntity<Object> updateCustomerInfo(@RequestHeader(name = "Authorization") String authorizationHeader , @RequestBody CustomerDTO customerDTO) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+            Customer customerFromJwtToken = jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
+            Customer customerUpdate = customerService.updateCustomerInfo(customerFromJwtToken, customerDTO);
+            return new ResponseEntity<>(customerUpdate, HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>("Token Invalid not get customer info ", HttpStatus.UNAUTHORIZED);
+        }
+    }
 
 }
