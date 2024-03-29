@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -72,7 +73,7 @@ public class CustomerService {
         for (Customer customer : allByCustomerName) {
             boolean matches = passwordEncoder.matches(customerDTO.getPassword(), customer.getPassword());
             if (matches) {
-                String token = this.jwtTokenGenerator.generateJwtTokenByCustomer(customerDTO);
+                String token = this.jwtTokenGenerator.generateJwtTokenByCustomer(customer);
                 response.put("token", token);
                 return response;
             } else {

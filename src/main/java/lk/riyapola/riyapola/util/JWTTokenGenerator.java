@@ -51,11 +51,11 @@ public class JWTTokenGenerator {
                 .compact();
     }
 
-
-    public String generateJwtTokenByCustomer(CustomerDTO customerDTO) {
+    public String generateJwtTokenByCustomer(Customer customer) {
+        System.out.println("jwt id ============= " + customer);
         return Jwts.builder()
-                .setId(String.valueOf(customerDTO.getCustomerId()))
-                .setSubject(customerDTO.getUserName())
+                .setId(String.valueOf(customer.getCustomerId()))
+                .setSubject(customer.getUserName())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key(), SignatureAlgorithm.HS256)

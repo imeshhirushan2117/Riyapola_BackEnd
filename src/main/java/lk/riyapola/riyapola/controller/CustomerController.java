@@ -102,7 +102,6 @@ public class CustomerController {
         return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
     }
 
-
     @GetMapping("/getVehicleInformationForCustomer/{vehicleId}")
     public ResponseEntity<Object> getVehicleInformationForCustomer(@PathVariable Integer vehicleId){
       try {
@@ -112,7 +111,6 @@ public class CustomerController {
           return new ResponseEntity<>("Not Vehicles Information By Customers", HttpStatus.FORBIDDEN);
       }
     }
-
 
     @GetMapping("/getCustomer/{customerId}")
     public ResponseEntity<Object> getCustomerById(@PathVariable Long customerId, @RequestHeader (name = "Authorization")String authorizationHeader){
