@@ -112,8 +112,13 @@ public class AdminService {
     }
 
     public List<Customer> getAllCustomers() {
+        //get All Customers Not Null
         List<Customer> customersWithNonNullFields = customerRepo.findCustomersWithNonNullFields();
         return customersWithNonNullFields;
+
+        //get All Customers
+        /*List<Customer> all = customerRepo.findAll();
+        return all;*/
     }
 
     public String deletedByCustomer(Long customerId) {
