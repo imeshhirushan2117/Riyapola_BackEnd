@@ -1,9 +1,5 @@
 package lk.riyapola.riyapola.service;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
 import lk.riyapola.riyapola.dto.CustomerDTO;
 import lk.riyapola.riyapola.entity.Customer;
 import lk.riyapola.riyapola.entity.Vehicle;
@@ -14,12 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -146,4 +137,13 @@ public class CustomerService {
         return all;
     }
 
+    public String deletedCustomerInfo(Customer customerIdFromJwtToken) {
+
+        if (customerRepo.existsById(customerIdFromJwtToken.getCustomerId())){
+           customerRepo.deleteById(customerIdFromJwtToken.getCustomerId());
+            return "Customer information deleted successfully.";
+        }else{
+            return "Customer with ID " + customerIdFromJwtToken.getCustomerId() + " not found.";
+        }
+    }
 }

@@ -81,12 +81,9 @@ public class JWTTokenGenerator {
 
     public Customer getCustomerFromJwtToken(String token) {
         String jwtToken = token.substring("Bearer ".length());
-        System.out.println("Token ====== " + jwtToken);
-
         String id = Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(jwtToken).getBody().getId();
         Long customerId = Long.parseLong(id);
         System.out.println("customerId ====== "+ id);
-
         return customerRepo.getCustomerByCustomerId(customerId);
     }
 

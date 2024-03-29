@@ -135,10 +135,19 @@ public class CustomerController {
     public ResponseEntity<Object> getCustomerDetails(@RequestHeader (name = "Authorization") String authorizationHeader){
         if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
             Customer customerFromJwtToken = jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
-            System.out.println("========= getUserInfoById " + customerFromJwtToken);
-
             return new ResponseEntity<>(customerFromJwtToken , HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>("Token Invalid not get customer info ", HttpStatus.UNAUTHORIZED);
+        }
+    }
 
+    @DeleteMapping("/deletedUserInfoById")
+    public ResponseEntity<Object> deletedCustomerInfo(@RequestHeader (name = "Authorization") String authorizationHeader) {
+        if (jwtTokenGenerator.validateJwtToken(authorizationHeader)){
+
+            Customer customerIdFromJwtToken = jwtTokenGenerator.getCustomerFromJwtToken(authorizationHeader);
+            String deletedCustomer = customerService.deletedCustomerInfo(customerIdFromJwtToken);
+            return new ResponseEntity<>(deletedCustomer , HttpStatus.CREATED);
         }else{
             return new ResponseEntity<>("Token Invalid not get customer info ", HttpStatus.UNAUTHORIZED);
         }
