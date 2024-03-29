@@ -78,7 +78,7 @@ public class CustomerService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
 
-        System.out.println("===== old date ========= " +customerRepo.getCustomerByDateTime(String.valueOf(id)));
+        System.out.println("===== old date ========= " + customerRepo.getCustomerByDateTime(String.valueOf(id)));
 
         if (customerDTO.getDateTime() == null) {
             Date currentDate = new Date();
@@ -138,32 +138,28 @@ public class CustomerService {
     }
 
     public String deletedCustomerInfo(Customer customerIdFromJwtToken) {
-        if (customerRepo.existsById(customerIdFromJwtToken.getCustomerId())){
-           customerRepo.deleteById(customerIdFromJwtToken.getCustomerId());
+        if (customerRepo.existsById(customerIdFromJwtToken.getCustomerId())) {
+            customerRepo.deleteById(customerIdFromJwtToken.getCustomerId());
             return "Customer information deleted successfully.";
-        }else{
+        } else {
             return "Customer with ID " + customerIdFromJwtToken.getCustomerId() + " not found.";
         }
     }
 
     public Customer updateCustomerInfo(Customer customerFromJwtToken, CustomerDTO customerDTO) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(customerDTO.getPassword());
-        System.out.println("customerId ======= " + customerFromJwtToken.getDateTime());
-        if (customerRepo.existsById(Long.valueOf(customerFromJwtToken.getCustomerId()))){
+        if (customerRepo.existsById(Long.valueOf(customerFromJwtToken.getCustomerId()))) {
             Customer customer = customerRepo.findById(customerFromJwtToken.getCustomerId()).orElse(null);
             if (customer != null) {
-                    customer.setFirstName(customerDTO.getFirstName());
-                    customer.setLastName(customerDTO.getLastName());
-                    customer.setEmail(customerDTO.getEmail());
-                    customer.setContact(customerDTO.getContact());
-                    customer.setNic(customerDTO.getNic());
-                    customer.setAddress(customerDTO.getAddress());
-                    customer.setDateTime(customerFromJwtToken.getDateTime());
-                    customer.setUserName(customerDTO.getUserName());
-                    customer.setPassword(encodedPassword);
-                    customerRepo.save(customer);
-           }else {
+                customer.setFirstName(customerDTO.getFirstName());
+                customer.setLastName(customerDTO.getLastName());
+                customer.setEmail(customerDTO.getEmail());
+                customer.setContact(customerDTO.getContact());
+                customer.setNic(customerDTO.getNic());
+                customer.setAddress(customerDTO.getAddress());
+                customer.setDateTime(customerFromJwtToken.getDateTime());
+                customerRepo.save(customer);
+                return customer;
+            } else {
                 System.out.println("Customer with ID not found.");
             }
         }
