@@ -16,6 +16,7 @@ import java.util.List;
  * Time : 11:50 PM
  */
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -35,22 +36,6 @@ public class Vehicle {
     private String extraKm;
     private String status;
 
-    @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL)
-    List<VehicleImage> vehicleImages;
-
-
-    public Vehicle(Integer vehicleId, String brandName, String moduleName, int passengers, String fuelType, String transmissionType, String dailyRentalPrice, String dailyLimitKilometers, String extraKm, String status) {
-        this.vehicleId = vehicleId;
-        this.brandName = brandName;
-        this.moduleName = moduleName;
-        this.passengers = passengers;
-        this.fuelType = fuelType;
-        this.transmissionType = transmissionType;
-        this.dailyRentalPrice = dailyRentalPrice;
-        this.dailyLimitKilometers = dailyLimitKilometers;
-        this.extraKm = extraKm;
-        this.status = status;
-    }
 
     public Vehicle(String brandName, String moduleName, int passengers, String fuelType, String transmissionType, String dailyRentalPrice, String dailyLimitKilometers, String extraKm, String status) {
         this.brandName = brandName;
