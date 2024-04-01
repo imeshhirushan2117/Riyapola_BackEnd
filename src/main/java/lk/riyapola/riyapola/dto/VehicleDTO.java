@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created By Imesh Hirushan
@@ -27,4 +28,5 @@ public class VehicleDTO {
     private String dailyLimitKilometers;
     private String extraKm;
     private String status;
+
 }
