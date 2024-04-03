@@ -1,5 +1,6 @@
 package lk.riyapola.riyapola.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class VehicleImg {
 
     @ManyToOne
     @JoinColumn (name = "vehicle_Id")
+    @JsonIgnore
     private Vehicle vehicle;
 
 }

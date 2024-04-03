@@ -1,7 +1,6 @@
 package lk.riyapola.riyapola.service;
 
 import lk.riyapola.riyapola.dto.VehicleDTO;
-import lk.riyapola.riyapola.dto.VehicleImgSaveDTO;
 import lk.riyapola.riyapola.entity.Vehicle;
 import lk.riyapola.riyapola.entity.VehicleImg;
 import lk.riyapola.riyapola.repo.VehicleRepo;
@@ -60,7 +59,6 @@ public class VehicleService {
             vehicleImgs.add(vehicleImg);
             save.setVehicleImgs(vehicleImgs);
             Vehicle saved = vehicleRepo.save(save);
-
             return saved;
         }
         return null;

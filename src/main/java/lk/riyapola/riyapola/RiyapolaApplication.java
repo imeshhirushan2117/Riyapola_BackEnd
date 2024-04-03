@@ -27,7 +27,7 @@ public class RiyapolaApplication {
 
 	@PostConstruct
 	public void initUsers() {
-/*		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		/*BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPassword = passwordEncoder.encode("12345");
 		List<Admin> admin = Stream.of(
 				new Admin("Imesh", "Hirushan", "imesh@gmail.com", encodedPassword , "Admin")
