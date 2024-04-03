@@ -1,6 +1,8 @@
 package lk.riyapola.riyapola.controller;
 
 import lk.riyapola.riyapola.dto.VehicleDTO;
+import lk.riyapola.riyapola.dto.VehicleImgDTO;
+import lk.riyapola.riyapola.dto.VehicleImgSaveDTO;
 import lk.riyapola.riyapola.entity.Vehicle;
 import lk.riyapola.riyapola.service.VehicleService;
 import lk.riyapola.riyapola.util.JWTTokenGenerator;
@@ -10,6 +12,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -34,7 +38,7 @@ public class VehicleRegisterController {
     }
 
     @PostMapping("/saveVehicle")
-    public ResponseEntity<Object> saveVehicle(@RequestBody VehicleDTO vehicleDTO, @RequestHeader(name = "Authorization") String authorizationHeader) {
+    public ResponseEntity<Object> saveVehicle( @ModelAttribute VehicleDTO vehicleDTO, @RequestHeader(name = "Authorization") String authorizationHeader) throws IOException, URISyntaxException {
 
         if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
             Vehicle vehicleSave = vehicleService.saveVehicle(vehicleDTO);
@@ -74,6 +78,4 @@ public class VehicleRegisterController {
             return new ResponseEntity<>("Invalid Token Get By Admin" , HttpStatus.FORBIDDEN);
         }
     }
-
-
 }

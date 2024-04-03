@@ -28,5 +28,6 @@ public class VehicleDTO {
     private String dailyLimitKilometers;
     private String extraKm;
     private String status;
+    private MultipartFile image;
 
 }

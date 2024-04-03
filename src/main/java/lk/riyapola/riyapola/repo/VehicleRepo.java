@@ -2,6 +2,7 @@ package lk.riyapola.riyapola.repo;
 
 import lk.riyapola.riyapola.entity.Customer;
 import lk.riyapola.riyapola.entity.Vehicle;
+import lk.riyapola.riyapola.entity.VehicleImg;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +20,7 @@ public interface VehicleRepo extends JpaRepository <Vehicle , Integer> {
 
     @Query(value = "SELECT * FROM vehicle WHERE vehicle_id = :vehicleId", nativeQuery = true)
     List<Vehicle> findVehiclesByVehicleId (@Param("vehicleId") Integer vehicleId);
+
 
 
 }

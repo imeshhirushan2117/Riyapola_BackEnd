@@ -64,4 +64,5 @@ public class Vehicle {
         this.extraKm = extraKm;
         this.status = status;
     }
+
 }

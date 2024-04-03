@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created By Imesh Hirushan
@@ -26,6 +27,5 @@ public class VehicleImg {
     @ManyToOne
     @JoinColumn (name = "vehicle_Id")
     private Vehicle vehicle;
-
 
 }
