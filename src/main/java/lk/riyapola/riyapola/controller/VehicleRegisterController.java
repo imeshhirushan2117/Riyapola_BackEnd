@@ -38,16 +38,22 @@ public class VehicleRegisterController {
     }
 
     @PostMapping("/saveVehicle")
-    public ResponseEntity<Object> saveVehicle( @ModelAttribute VehicleDTO vehicleDTO, @RequestHeader(name = "Authorization") String authorizationHeader) throws IOException, URISyntaxException {
+    public ResponseEntity<Object> saveVehicle( @ModelAttribute VehicleDTO vehicleDTO, @RequestHeader(name = "Authorization") String authorizationHeader) {
 
         if (jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
-            Vehicle vehicleSave = vehicleService.saveVehicle(vehicleDTO);
+            Vehicle vehicleSave = null;
+            try {
+                vehicleSave = vehicleService.saveVehicle(vehicleDTO);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
             return new ResponseEntity<>(vehicleSave, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Invalid Token Get By Admin", HttpStatus.FORBIDDEN);
         }
     }
-
 
     @GetMapping("/getAllVehicles/vehicles")
     public ResponseEntity<Object> getAllCars(@RequestHeader(name = "Authorization") String authorizationHeader) {
