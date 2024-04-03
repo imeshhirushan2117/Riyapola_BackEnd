@@ -69,7 +69,7 @@ public class VehicleService {
         return all;
     }
 
-    public Vehicle updateVehicle(VehicleDTO vehicleDTO, Integer vehicleId) {
+    public Vehicle updateVehicle(VehicleDTO vehicleDTO, Integer vehicleId) throws IOException, URISyntaxException {
         if (vehicleRepo.existsById(vehicleId)) {
             Vehicle save = vehicleRepo.save(new Vehicle(vehicleId,
                     vehicleDTO.getBrandName(),
@@ -82,7 +82,22 @@ public class VehicleService {
                     vehicleDTO.getExtraKm(),
                     vehicleDTO.getStatus()
             ));
-            return save;
+
+            VehicleImg  vehicleImg =  new VehicleImg();
+            String absolutePath = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getParentFile().getAbsolutePath();
+            File uploadDir = new File(absolutePath + "/src/main/resources/static/uploads");
+            uploadDir.mkdir();
+            vehicleDTO.getImage().transferTo(new File(uploadDir.getAbsolutePath() + "/" +vehicleDTO.getImage().getOriginalFilename()));
+
+            vehicleImg.setImage(absolutePath);
+            vehicleImg.setImage("uploads/" +vehicleDTO.getImage().getOriginalFilename());
+            vehicleImg.setVehicle(save);
+
+            List<VehicleImg> vehicleImgs = new ArrayList<>();
+            vehicleImgs.add(vehicleImg);
+            save.setVehicleImgs(vehicleImgs);
+            Vehicle saved = vehicleRepo.save(save);
+            return saved;
         } else {
             return null;
         }
