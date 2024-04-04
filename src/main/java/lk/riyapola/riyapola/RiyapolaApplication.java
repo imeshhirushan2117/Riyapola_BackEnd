@@ -27,12 +27,14 @@ public class RiyapolaApplication {
 
 	@PostConstruct
 	public void initUsers() {
-		/*BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String encodedPassword = passwordEncoder.encode("12345");
-		List<Admin> admin = Stream.of(
-				new Admin("Imesh", "Hirushan", "imesh@gmail.com", encodedPassword , "Admin")
-		).toList();
-		adminRepo.saveAll(admin);*/
+		if (adminRepo.count() == 0) {
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String encodedPassword = passwordEncoder.encode("12345");
+			List<Admin> admins = List.of(
+					new Admin("Imesh", "Hirushan", "imesh@gmail.com", encodedPassword, "Admin")
+			);
+			adminRepo.saveAll(admins);
+		}
 	}
 
 }
